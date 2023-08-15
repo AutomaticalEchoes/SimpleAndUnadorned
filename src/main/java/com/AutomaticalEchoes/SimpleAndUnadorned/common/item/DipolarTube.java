@@ -7,11 +7,14 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.Potion;
@@ -22,7 +25,7 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class DipolarTube extends Item implements Vanishable {
+public class DipolarTube extends ArrowItem implements Vanishable {
     public DipolarTube(Properties p_41383_) {
         super(p_41383_);
     }
@@ -69,5 +72,12 @@ public class DipolarTube extends Item implements Vanishable {
                 }
             }
         }
+    }
+
+    @Override
+    public AbstractArrow createArrow(Level p_40513_, ItemStack p_40514_, LivingEntity p_40515_) {
+        DipolarTubeProjectile dipolarTubeProjectile = DipolarUtils.makeProjectile(p_40513_,p_40514_,p_40515_);
+        dipolarTubeProjectile.setTurn(true);
+        return dipolarTubeProjectile;
     }
 }

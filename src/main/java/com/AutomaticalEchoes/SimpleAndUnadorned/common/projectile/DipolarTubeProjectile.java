@@ -3,6 +3,8 @@ package com.AutomaticalEchoes.SimpleAndUnadorned.common.projectile;
 import com.AutomaticalEchoes.SimpleAndUnadorned.api.DipolarUtils.DipolarTubeFunc;
 import com.AutomaticalEchoes.SimpleAndUnadorned.register.EntityRegister;
 import com.AutomaticalEchoes.SimpleAndUnadorned.register.ItemsRegister;
+import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
@@ -13,6 +15,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
@@ -23,6 +26,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -37,7 +41,9 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
     private static final EntityDataAccessor<Boolean> TURN = SynchedEntityData.defineId(DipolarTubeProjectile.class,EntityDataSerializers.BOOLEAN);
     private int tickCount = 0;
     private final ArrayList<DipolarTubeFunc> dipolarTubeFuncArrayList = new ArrayList<>();
-    private boolean isHit,turn;
+    private boolean turn;
+    @Nullable
+    private IntOpenHashSet piercingIgnoreEntityIds;
 
     public static DipolarTubeProjectile Create(EntityType<? extends DipolarTubeProjectile> p_37442_, Level p_37443_){
         return new DipolarTubeProjectile(p_37443_);
@@ -97,7 +103,19 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
 
     @Override
     protected void onHitBlock(BlockHitResult p_37258_) {
-        super.onHitBlock(p_37258_);
+        BlockState blockstate = this.level.getBlockState(p_37258_.getBlockPos());
+        blockstate.onProjectileHit(this.level, blockstate, p_37258_, this);
+
+        Vec3 vec3 = p_37258_.getLocation().subtract(this.getX(), this.getY(), this.getZ());
+        this.setDeltaMovement(vec3);
+        Vec3 vec31 = vec3.normalize().scale((double)0.05F);
+        this.setPosRaw(this.getX() - vec31.x, this.getY() - vec31.y, this.getZ() - vec31.z);
+        this.inGround = true;
+        this.shakeTime = 7;
+        this.setSoundEvent(SoundEvents.GLASS_HIT);
+        this.playSound(this.getHitGroundSoundEvent(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
+        this.setShotFromCrossbow(false);
+
         setOnGround(true);
         setTurn(false);
         for(DipolarTubeFunc dipolarTubeFunc : dipolarTubeFuncArrayList){
@@ -116,16 +134,21 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
         if (entity.getType() == EntityType.ENDERMAN) {
             return;
         }
-        if (this.getPierceLevel() > 0) {
-            this.setPierceLevel((byte) (this.getPierceLevel() - 1));
-        }else {
-            this.isHit = true;
-            SoundEvent soundevent = SoundEvents.GLASS_BREAK;
-            float f1 = 1.0F;
-            this.playSound(soundevent, f1, 1.0F);
-        }
+        SoundEvent soundevent = SoundEvents.GLASS_BREAK;
+        float f1 = 1.0F;
 
-        preHitEntity(p_37259_);
+        if (this.getPierceLevel() > 0) {
+            if (this.piercingIgnoreEntityIds == null) {
+                this.piercingIgnoreEntityIds = new IntOpenHashSet(5);
+            }
+            this.piercingIgnoreEntityIds.add(entity.getId());
+            this.setPierceLevel((byte) (this.getPierceLevel() - 1));
+            this.playSound(soundevent, f1, 1.0F);
+            preHitEntity(p_37259_);
+        }else {
+            this.playSound(soundevent, f1, 1.0F);
+            preHitEntity(p_37259_);
+        }
     }
 
     @Override
@@ -143,18 +166,28 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
         }
     }
 
-
 //_____________________________________________________________________________________________________________________________
-    public static void CreateAreaEffectCloud(ServerLevel serverLevel,Vec3 location, ItemStack itemStack){
+    public static void CreateAreaEffectCloudOrInstantenous(ServerLevel serverLevel,Vec3 location, ItemStack itemStack ,Entity entity){
+        int i = 0;
         AreaEffectCloud areaEffectCloud = new AreaEffectCloud(serverLevel , location.x, location.y, location.z);
         areaEffectCloud.setRadius(2.0F);
         areaEffectCloud.setRadiusOnUse(-0.5F);
         areaEffectCloud.setWaitTime(10);
         areaEffectCloud.setRadiusPerTick(-areaEffectCloud.getRadius() / (float)areaEffectCloud.getDuration());
         for(MobEffectInstance mobeffectinstance : PotionUtils.getMobEffects(itemStack)) {
-            areaEffectCloud.addEffect(new MobEffectInstance(mobeffectinstance));
+            if (mobeffectinstance.getEffect().isInstantenous()) {
+                if(entity instanceof LivingEntity livingEntity){
+                    mobeffectinstance.getEffect().applyInstantenousEffect(null, null, livingEntity, mobeffectinstance.getAmplifier(), 1.0D);
+                }else {
+                    entity.hurt(DamageSource.MAGIC,1);
+                }
+
+            } else {
+                areaEffectCloud.addEffect(new MobEffectInstance(mobeffectinstance));
+                i++;
+            }
         }
-        serverLevel.addFreshEntity(areaEffectCloud);
+        if(i > 0) serverLevel.addFreshEntity(areaEffectCloud);
     }
 
     public static void ApplyEffectToLivingEntity( DipolarTubeProjectile dipolarTubeProjectile,LivingEntity livingEntity ){
@@ -208,7 +241,7 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
     }
 
     public boolean canHitEntity(Entity entity){
-        return super.canHitEntity(entity);
+        return super.canHitEntity(entity) && (this.piercingIgnoreEntityIds == null || !this.piercingIgnoreEntityIds.contains(entity.getId()));
     }
 
 }

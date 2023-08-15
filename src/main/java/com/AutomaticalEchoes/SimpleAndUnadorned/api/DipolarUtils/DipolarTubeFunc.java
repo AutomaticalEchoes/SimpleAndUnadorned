@@ -29,7 +29,7 @@ public interface DipolarTubeFunc {
     static void ApplyEffectOnHitLivingEntity(DipolarTubeProjectile dipolarTubeProjectile, EntityHitResult entityHitResult  ){
         if (dipolarTubeProjectile.level instanceof ServerLevel serverLevel && entityHitResult.getEntity() instanceof LivingEntity livingEntity && !livingEntity.isBlocking()) {
             if(dipolarTubeProjectile.getPierceLevel() > 0){
-                DipolarTubeProjectile.CreateAreaEffectCloud(serverLevel,dipolarTubeProjectile.position(), dipolarTubeProjectile.getItem());
+                DipolarTubeProjectile.CreateAreaEffectCloudOrInstantenous(serverLevel,livingEntity.position(), dipolarTubeProjectile.getItem(),livingEntity);
             }else {
                 DipolarTubeProjectile.ApplyEffectToLivingEntity(dipolarTubeProjectile,livingEntity);
                 dipolarTubeProjectile.discard();
@@ -41,7 +41,7 @@ public interface DipolarTubeFunc {
         if (dipolarTubeProjectile.level instanceof ServerLevel serverLevel && dipolarTubeProjectile.isOnGround()) {
             List<Entity> entities = serverLevel.getEntities(dipolarTubeProjectile, dipolarTubeProjectile.getBoundingBox().inflate(0.2F), dipolarTubeProjectile::canHitEntity);
             if(entities.size() != 0){
-                DipolarTubeProjectile.CreateAreaEffectCloud(serverLevel,dipolarTubeProjectile.position(), dipolarTubeProjectile.getItem());
+                DipolarTubeProjectile.CreateAreaEffectCloudOrInstantenous(serverLevel,dipolarTubeProjectile.position(), dipolarTubeProjectile.getItem(),entities.get(0));
                 dipolarTubeProjectile.playSound(SoundEvents.GLASS_BREAK);
                 for (Entity entity : entities) {
                     entity.setDeltaMovement(entity.getEyePosition().subtract(dipolarTubeProjectile.position()).normalize().scale(0.2));
