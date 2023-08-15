@@ -1,0 +1,7 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "simple_and_unadorned:item/dipolar_tube_overlay",
+		"layer1": "simple_and_unadorned:item/dipolar_tube"
+	}
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "" :{
+          "model": "simple_and_unadorned:block/suspicious_slime_block"
+        }
+  }
+}
