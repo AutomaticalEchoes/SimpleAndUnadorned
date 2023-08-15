@@ -157,6 +157,16 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
         serverLevel.addFreshEntity(areaEffectCloud);
     }
 
+    public static void ApplyEffectToLivingEntity( DipolarTubeProjectile dipolarTubeProjectile,LivingEntity livingEntity ){
+        for(MobEffectInstance mobeffectinstance : PotionUtils.getMobEffects(dipolarTubeProjectile.getItem())) {
+            if (mobeffectinstance.getEffect().isInstantenous()) {
+                mobeffectinstance.getEffect().applyInstantenousEffect(null, null, livingEntity, mobeffectinstance.getAmplifier(), 1.0D);
+            } else {
+                livingEntity.addEffect(new MobEffectInstance(mobeffectinstance));
+            }
+        }
+    }
+
     protected void preHitEntity(EntityHitResult p_36757_){
         for(DipolarTubeFunc dipolarTubeFunc : dipolarTubeFuncArrayList){
             dipolarTubeFunc.onHitEntity(this,p_36757_);

@@ -28,21 +28,12 @@ public interface DipolarTubeFunc {
 
     static void ApplyEffectOnHitLivingEntity(DipolarTubeProjectile dipolarTubeProjectile, EntityHitResult entityHitResult  ){
         if (dipolarTubeProjectile.level instanceof ServerLevel serverLevel && entityHitResult.getEntity() instanceof LivingEntity livingEntity && !livingEntity.isBlocking()) {
-            for(MobEffectInstance mobeffectinstance : PotionUtils.getMobEffects(dipolarTubeProjectile.getItem())) {
-                if (mobeffectinstance.getEffect().isInstantenous()) {
-                    mobeffectinstance.getEffect().applyInstantenousEffect(null, null, livingEntity, mobeffectinstance.getAmplifier(), 1.0D);
-                } else {
-                    livingEntity.addEffect(new MobEffectInstance(mobeffectinstance));
-                }
+            if(dipolarTubeProjectile.getPierceLevel() > 0){
+                DipolarTubeProjectile.CreateAreaEffectCloud(serverLevel,dipolarTubeProjectile.position(), dipolarTubeProjectile.getItem());
+            }else {
+                DipolarTubeProjectile.ApplyEffectToLivingEntity(dipolarTubeProjectile,livingEntity);
+                dipolarTubeProjectile.discard();
             }
-            dipolarTubeProjectile.discard();
-        }
-    }
-
-    static void CreateAreaEffectCloudOnHit(DipolarTubeProjectile dipolarTubeProjectile, EntityHitResult entityHitResult){
-        if (dipolarTubeProjectile.level instanceof ServerLevel serverLevel && entityHitResult.getEntity() instanceof LivingEntity livingEntity) {
-            DipolarTubeProjectile.CreateAreaEffectCloud(serverLevel,dipolarTubeProjectile.position(), dipolarTubeProjectile.getItem());
-            if(dipolarTubeProjectile.getPierceLevel() <= 0) dipolarTubeProjectile.discard();
         }
     }
 
