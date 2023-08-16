@@ -3,5 +3,28 @@
 	"textures": {
 		"layer0": "simple_and_unadorned:item/dipolar_tube_overlay",
 		"layer1": "simple_and_unadorned:item/dipolar_tube"
-	}
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"handing": 1,
+				"power": 0.3
+			},
+			"model": "simple_and_unadorned:item/dipolar_tube_power_0"
+		},
+		{
+			"predicate": {
+				"handing": 1,
+				"power": 0.6
+			},
+			"model": "simple_and_unadorned:item/dipolar_tube_power_1"
+		},
+		{
+			"predicate": {
+				"handing": 1,
+				"power": 0.9
+			},
+			"model": "simple_and_unadorned:item/dipolar_tube_power_2"
+		}
+	]
 }

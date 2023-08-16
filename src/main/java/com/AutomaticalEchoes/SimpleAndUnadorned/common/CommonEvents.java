@@ -8,10 +8,10 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class CommonEvents {
 
-    @SubscribeEvent
-    public static void SummonSlime(SusSlimeSummonEvent event){
-        SimpleAndUnadorned.LOGGER.info("on Summon call");
-
-    }
+//    @SubscribeEvent
+//    public static void SummonSlime(SusSlimeSummonEvent event){
+//        SimpleAndUnadorned.LOGGER.info("on Summon call");
+//
+//    }
 
 }

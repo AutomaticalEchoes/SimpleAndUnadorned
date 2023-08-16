@@ -28,7 +28,7 @@ public class FluidRegister {
             .block(BlockRegister.ACIDITY)
             .slopeFindDistance(2)
             .levelDecreasePerBlock(2);
-   public class Type{
+   public static class Type{
         public static final DeferredRegister<FluidType> TYPE_DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, SimpleAndUnadorned.MODID);
         public static final RegistryObject<FluidType> MUCUS = TYPE_DEFERRED_REGISTER.register("mucus", () ->
                 new FunctionFluidType(FluidType.Properties.create()

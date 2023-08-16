@@ -8,6 +8,7 @@ import com.AutomaticalEchoes.SimpleAndUnadorned.common.block.ILayeredCauldronBlo
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.block.NonNewtonianFluidBlock;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.blockEntity.SusSlimeBase;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -18,6 +19,8 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
 
 public class BlockRegister {
     public static final DeferredRegister<Block> DEFERRED_REGISTER =DeferredRegister.create(ForgeRegistries.BLOCKS , SimpleAndUnadorned.MODID);
@@ -41,9 +44,6 @@ public class BlockRegister {
 
     public class BlockEntityRegister{
         public static final DeferredRegister<BlockEntityType<?>> DEFERRED_REGISTER =DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES , SimpleAndUnadorned.MODID);
-        public static final RegistryObject<BlockEntityType<SusSlimeBase>> SUS_SLIME_BASE = DEFERRED_REGISTER.register("sus_slime_base", () -> {
-            return BlockEntityType.Builder.of(SusSlimeBase::Create, SUSPICIOUS_SLIME_BLOCK.get()).build(null);
-        });
+        public static final RegistryObject<BlockEntityType<SusSlimeBase>> SUS_SLIME_BASE = DEFERRED_REGISTER.register("sus_slime_base", () -> BlockEntityType.Builder.of(SusSlimeBase::Create, SUSPICIOUS_SLIME_BLOCK.get()).build(null));
     }
-
 }

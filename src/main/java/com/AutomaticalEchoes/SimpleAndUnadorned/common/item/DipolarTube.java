@@ -43,7 +43,7 @@ public class DipolarTube extends ArrowItem implements Vanishable {
         if(p_41413_ instanceof ServerLevel serverLevel){
             DipolarTubeProjectile dipolarTubeProjectile = DipolarUtils.makeProjectile(serverLevel,p_41412_,p_41414_);
             if(i >= 2) dipolarTubeProjectile.setTurn(true);
-            dipolarTubeProjectile.shootFromRotation(p_41414_, p_41414_.getXRot(), p_41414_.getYRot(), -4.0F * (6 - f), 0.5F * f, 1.0F);
+            dipolarTubeProjectile.shootFromRotation(p_41414_, p_41414_.getXRot(), p_41414_.getYRot(), -4.0F * (6 - f) - 2.0F, 0.5F * f, 1.0F);
             serverLevel.addFreshEntity(dipolarTubeProjectile);
         }
         if (p_41414_ instanceof Player player && player.getAbilities().instabuild) return;
@@ -80,4 +80,6 @@ public class DipolarTube extends ArrowItem implements Vanishable {
         dipolarTubeProjectile.setTurn(true);
         return dipolarTubeProjectile;
     }
+
+
 }

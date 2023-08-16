@@ -1,0 +1,17 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "simple_and_unadorned:item/dipolar_tube_overlay",
+		"layer1": "simple_and_unadorned:item/dipolar_tube"
+	},
+	"display": {
+		"firstperson_righthand": {
+			"rotation": [ 0,-90,-40],
+			"translation": [0, 2, 1]
+		},
+		"firstperson_lefthand": {
+			"rotation": [ 0,-90,-40],
+			"translation": [ 0, 2, 1]
+		}
+	}
+}

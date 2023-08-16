@@ -123,6 +123,8 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
         }
     }
 
+
+
     @Override
     protected ItemStack getPickupItem() {
         return getItem();
@@ -154,10 +156,13 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
     @Override
     public void tick() {
         super.tick();
-        if(isTurn() && this.level.isClientSide && Minecraft.getInstance().player.getId() == this.getOwner().getId()){
-            for (int i = 0; i < 3; i++) {
+        if(this.level.isClientSide && Minecraft.getInstance().player.getId() == this.getOwner().getId()){
+            if(isTurn()){
                 this.level.addParticle(ParticleTypes.GLOW,this.getX(),this.getY() + 0.3 * random.nextInt(-1,1),this.getZ(),0,0,0);
+            }else if(tickCount % 5 == 0){
+                this.level.addParticle(ParticleTypes.GLOW,this.getX() + 0.1 * random.nextInt(-1,1),this.getY() ,this.getZ() + 0.1 * random.nextInt(-1,1),0,10,0);
             }
+
 
         }
         if(this.isAlive()) tickCount ++ ;
@@ -166,7 +171,17 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
         }
     }
 
-//_____________________________________________________________________________________________________________________________
+    @Override
+    public void onRemovedFromWorld() {
+        if(this.level.isClientSide) {
+            for (int i = 0; i < 20; i++) {
+                this.level.addParticle(ParticleTypes.INSTANT_EFFECT,this.getX() + 0.5 * random.nextInt(-1,1),this.getY() + 0.5 * random.nextInt(-1,1),this.getZ() + 0.5 * random.nextInt(-1,1),0,0,0);
+            }
+        }
+        super.onRemovedFromWorld();
+    }
+
+    //_____________________________________________________________________________________________________________________________
     public static void CreateAreaEffectCloudOrInstantenous(ServerLevel serverLevel,Vec3 location, ItemStack itemStack ,Entity entity){
         int i = 0;
         AreaEffectCloud areaEffectCloud = new AreaEffectCloud(serverLevel , location.x, location.y, location.z);

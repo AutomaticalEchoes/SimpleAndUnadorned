@@ -16,7 +16,6 @@ public class EffectsRegister {
     public static final DeferredRegister<MobEffect> REGISTRY = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, SimpleAndUnadorned.MODID);
     public static final RegistryObject<RageTargetEffect> RAGE_TARGET =REGISTRY.register("rage_target",
             () -> new RageTargetEffect(MobEffectCategory.HARMFUL, 16284963));
-
     public static final RegistryObject<MobEffect> INVALID_ARMOR=REGISTRY.register("invalid_armor",
             () -> BaseEffect.Create(MobEffectCategory.HARMFUL,5865782)
                     .addAttributeModifier(Attributes.ARMOR,"CB65EE4B-E64E-4BA1-824D-17F328D2E10C",(double) -0.4F, AttributeModifier.Operation.MULTIPLY_TOTAL)
