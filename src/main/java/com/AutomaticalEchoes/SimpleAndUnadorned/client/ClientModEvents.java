@@ -41,19 +41,11 @@ public  class ClientModEvents {
         ItemBlockRenderTypes.setRenderLayer(FluidRegister.ACIDITY.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(FluidRegister.ACIDITY_FLOW.get(), RenderType.translucent());
         event.enqueueWork(() -> {
-            ItemProperties.register(ItemsRegister.DIPOLAR_TUBE_POTION_ITEM.get(), new ResourceLocation("power"), (ClampedItemPropertyFunction) (p_174564_, p_174565_, p_174566_, p_174567_) -> {
-                if(p_174566_ != null && p_174566_.getUseItem() == p_174564_){
-                    return (float)(p_174564_.getUseDuration() - p_174566_.getUseItemRemainingTicks()) / 60.0F;
-                }
-                return 0;
-            });
+            ItemProperties.register(ItemsRegister.DIPOLAR_TUBE_POTION_ITEM.get(), new ResourceLocation("power"),
+                    (ClampedItemPropertyFunction) (p_174564_, p_174565_, p_174566_, p_174567_) -> p_174566_ != null && p_174566_.getUseItem() == p_174564_ ? (float)(p_174564_.getUseDuration() - p_174566_.getUseItemRemainingTicks()) / 60.0F : 0);
 
-            ItemProperties.register(ItemsRegister.DIPOLAR_TUBE_POTION_ITEM.get(), new ResourceLocation("handing"), new ClampedItemPropertyFunction() {
-                @Override
-                public float unclampedCall(ItemStack p_174564_, @Nullable ClientLevel p_174565_, @Nullable LivingEntity p_174566_, int p_174567_) {
-                    return p_174566_ != null && p_174566_.isUsingItem() && p_174566_.getUseItem() == p_174564_ ? 1.0F : 0;
-                }
-            });
+            ItemProperties.register(ItemsRegister.DIPOLAR_TUBE_POTION_ITEM.get(), new ResourceLocation("handing"),
+                    (ClampedItemPropertyFunction) (p_174564_, p_174565_, p_174566_, p_174567_) -> p_174566_ != null && p_174566_.isUsingItem() && p_174566_.getUseItem() == p_174564_ ? 1.0F : 0);
         });
     }
 
