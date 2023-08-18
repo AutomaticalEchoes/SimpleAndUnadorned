@@ -15,8 +15,8 @@ plugins {
 }
 
 version = '1.0'
-group = 'com.AutomaticalEchoes.SimpleAndUnadorned' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'SimpleAndUnadorned'
+group = 'com.automaticalechoes.simpleandunadorned' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'simpleandunadorned'
 
 apply plugin:  'org.spongepowered.mixin'
 mixin {
