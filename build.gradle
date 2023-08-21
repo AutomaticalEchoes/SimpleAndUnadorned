@@ -11,8 +11,10 @@ buildscript {
 plugins {
     id 'eclipse'
     id 'maven-publish'
+    id 'java-library'
     id 'net.minecraftforge.gradle' version '5.1.+'
 }
+
 
 
 publishing {
@@ -29,7 +31,7 @@ publishing {
 }
 
 
-version = '1.0'
+version = 'api—1.0'
 group = 'com.automaticalechoes.simpleandunadorned' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'simpleandunadorned'
 
@@ -199,18 +201,6 @@ jar.finalizedBy('reobfJar')
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
 // publish.dependsOn('reobfJar')
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact jar
-        }
-    }
-    repositories {
-        maven {
-            url "file://${project.projectDir}/mcmodsrepo"
-        }
-    }
-}
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
