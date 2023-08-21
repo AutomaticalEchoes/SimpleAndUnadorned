@@ -31,7 +31,7 @@ publishing {
 }
 
 
-version = 'api—1.0'
+version = 'api'
 group = 'com.automaticalechoes.simpleandunadorned' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'simpleandunadorned'
 
