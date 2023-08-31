@@ -14,6 +14,8 @@ public class ModCommonConfig {
     public static final ForgeConfigSpec.ConfigValue<Double> SUSPICIOUS_CREEPER_AREA_EFFECT_RADIUS;
     public static final ForgeConfigSpec.ConfigValue<Integer> SUSPICIOUS_CREEPER_AREA_EFFECT_DURATION_TIME;
 
+    public static final ForgeConfigSpec.ConfigValue<Integer> WARNING_TICK;
+
     public static final ForgeConfigSpec.ConfigValue<Integer> SUSPICIOUS_SLIME_ACIDITY_AREA_EFFECT_RADIUS;
     public static final ForgeConfigSpec.ConfigValue<Integer> SUSPICIOUS_SLIME_ACIDITY_AREA_EFFECT_DURATION_TIME;
     public static final ForgeConfigSpec.ConfigValue<Integer> SUSPICIOUS_SLIME_ACIDITY_DISTANCE;
@@ -39,7 +41,7 @@ public class ModCommonConfig {
         RAGE_TARGET_EFFECT_SPEEDUP_LEVEL=BUILDER.comment("monster speed up level while range").define("speed up leve",4);
         BUILDER.pop();
 
-        BUILDER.push("SUSPICIOUS_CREEPER");
+        BUILDER.push("creeper");
         SUSPICIOUS_CREEPER_RAGE_EFFECT_DURATION_TIME=BUILDER.defineInRange("rage effect duration time",300,120,300);
         SUSPICIOUS_CREEPER_INJECT_TIME=BUILDER.define("SUSPICIOUS_CREEPER inject time",4);
         SUSPICIOUS_CREEPER_EXPLODE_RADIUS=BUILDER.defineInRange("SUSPICIOUS_CREEPER explode radius",5,0.5,11);
@@ -47,7 +49,11 @@ public class ModCommonConfig {
         SUSPICIOUS_CREEPER_AREA_EFFECT_DURATION_TIME=BUILDER.defineInRange("SUSPICIOUS_CREEPER area effect duration time",10,1,10);
         BUILDER.pop();
 
-        BUILDER.push("SUSPICIOUS_SLIME");
+        BUILDER.push("mini creeper");
+        WARNING_TICK = BUILDER.defineInRange("mini creeper warning time ",4,2,10);
+        BUILDER.pop();
+
+        BUILDER.push("slime");
         SUSPICIOUS_SLIME_ACIDITY_AREA_EFFECT_RADIUS=BUILDER.defineInRange("SUSPICIOUS_SLIME acidity area effect radius",5,3,7);
         SUSPICIOUS_SLIME_ACIDITY_AREA_EFFECT_DURATION_TIME=BUILDER.defineInRange("SUSPICIOUS_SLIME acidity area effect duration time",20,15,30);
         SUSPICIOUS_SLIME_ACIDITY_DISTANCE=BUILDER.defineInRange("SUSPICIOUS_SLIME acidity distance",5,5,11);
@@ -56,7 +62,7 @@ public class ModCommonConfig {
         SUSPICIOUS_SLIME_BASE_CREATE_SLIME_TICK = BUILDER.defineInRange("SUSPICIOUS_SLIME_BASE create slime tick",450,300,600);
         BUILDER.pop();
 
-        BUILDER.push("suspicious enderman");
+        BUILDER.push("enderman");
         ENABLE_JOKE_ANGRY = BUILDER.define("enable joke : angry",true);
         ENABLE_JOKE_CATCH = BUILDER.define("enable joke : catch",true);
         ENABLE_JOKE_FRAME_UP = BUILDER.define("enable joke : frame up",true);
