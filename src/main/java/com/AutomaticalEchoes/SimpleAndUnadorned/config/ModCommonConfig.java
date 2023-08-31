@@ -21,6 +21,17 @@ public class ModCommonConfig {
     public static final ForgeConfigSpec.ConfigValue<Integer> SUSPICIOUS_SLIME_TRANSLATE_TICK;
     public static final ForgeConfigSpec.ConfigValue<Integer> SUSPICIOUS_SLIME_BASE_CREATE_SLIME_TICK;
 
+    public static final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_JOKE;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_JOKE_ANGRY;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_JOKE_CATCH;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_JOKE_FRAME_UP;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_JOKE_STEAL;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_JOKE_CAT_RIDE_CREEPER;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_JOKE_WOLF_RIDE_SKELETON;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_JOKE_PLAYER_RIDE_LIVING;
+    public static final ForgeConfigSpec.ConfigValue<Integer> ENDER_SCARE;
+
+
     static {
         BUILDER.push("myMod config");
         BUILDER.push("rage effect");
@@ -43,6 +54,18 @@ public class ModCommonConfig {
         SUSPICIOUS_SLIME_WANT_COLLECT_TICK=BUILDER.defineInRange("SUSPICIOUS_SLIME acidity prepare tick",4,3,5);
         SUSPICIOUS_SLIME_TRANSLATE_TICK=BUILDER.defineInRange("SUSPICIOUS_SLIME translate tick",30,15,45);
         SUSPICIOUS_SLIME_BASE_CREATE_SLIME_TICK = BUILDER.defineInRange("SUSPICIOUS_SLIME_BASE create slime tick",450,300,600);
+        BUILDER.pop();
+
+        BUILDER.push("suspicious enderman");
+        ENABLE_JOKE_ANGRY = BUILDER.define("enable joke : angry",true);
+        ENABLE_JOKE_CATCH = BUILDER.define("enable joke : catch",true);
+        ENABLE_JOKE_FRAME_UP = BUILDER.define("enable joke : frame up",true);
+        ENABLE_JOKE_STEAL = BUILDER.define("enable joke : steal",true);
+        ENABLE_JOKE_CAT_RIDE_CREEPER = BUILDER.define("enable joke : cat ride creeper",true);
+        ENABLE_JOKE_WOLF_RIDE_SKELETON = BUILDER.define("enable joke : wolf ride skeleton",true);
+        ENABLE_JOKE_PLAYER_RIDE_LIVING = BUILDER.define("enable joke : player ride living",true);
+        ENABLE_JOKE = BUILDER.define("enable joke",true);
+        ENDER_SCARE = BUILDER.defineInRange("ender sacre time ",60,60,3000);
         BUILDER.pop();
 
         BUILDER.pop();

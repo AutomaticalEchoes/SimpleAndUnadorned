@@ -48,14 +48,14 @@ public class SimpleAndUnadorned
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-        ICauldronInteraction.Init();
+
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ModCommonConfig.SPEC,"myMod-common.toml");
     }
 
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event)
     {
-
+        ICauldronInteraction.Init();
         // Do something when the server starts
     }
 
