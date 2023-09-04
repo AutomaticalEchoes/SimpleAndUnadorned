@@ -34,9 +34,9 @@ public class BlockRegister {
                     .isViewBlocking(BlockRegister::never)
                     .noOcclusion()).Fluid(FluidRegister.MUCUS).BucketPickupItem(ItemsRegister.MUCUS_BUCKET).CustomCollisionShape(BlockFunction::EmptyWithSlime).BlockEntity(SusSlimeBase::Create).Ticker(BlockFunction::SusSlimeTicker).OnRemove(BlockFunction::onRemove));
 
-    public static final RegistryObject<LayeredCauldronBlock> ACIDITY_CAULDRON_BLOCK = DEFERRED_REGISTER.register("acidity_cauldron_block",() ->  new ILayeredCauldronBlock(BlockBehaviour.Properties.copy(Blocks.CAULDRON), LayeredCauldronBlock.RAIN, ICauldronInteraction.ACIDITY).FluidFunction(FluidFunction::HurtArmor));
-    public static final RegistryObject<LayeredCauldronBlock> MUCUS_CAULDRON_BLOCK = DEFERRED_REGISTER.register("mucus_cauldron_block",() ->  new LayeredCauldronBlock(BlockBehaviour.Properties.copy(Blocks.CAULDRON), LayeredCauldronBlock.RAIN, ICauldronInteraction.MUCUS));
-    public static final RegistryObject<LayeredCauldronBlock> SUS_WATER_CAULDRON_BLOCK = DEFERRED_REGISTER.register("sus_water_cauldron_block",() ->  new LayeredCauldronBlock(BlockBehaviour.Properties.copy(Blocks.CAULDRON), LayeredCauldronBlock.RAIN, ICauldronInteraction.SUS_WATER));
+    public static final RegistryObject<LayeredCauldronBlock> ACIDITY_CAULDRON_BLOCK = DEFERRED_REGISTER.register("acidity_cauldron_block",() ->  new ILayeredCauldronBlock(BlockBehaviour.Properties.copy(Blocks.CAULDRON).lootFrom(() -> Blocks.CAULDRON), LayeredCauldronBlock.RAIN, ICauldronInteraction.ACIDITY).FluidFunction(FluidFunction::HurtArmor));
+    public static final RegistryObject<LayeredCauldronBlock> MUCUS_CAULDRON_BLOCK = DEFERRED_REGISTER.register("mucus_cauldron_block",() ->  new LayeredCauldronBlock(BlockBehaviour.Properties.copy(Blocks.CAULDRON).lootFrom(() -> Blocks.CAULDRON), LayeredCauldronBlock.RAIN, ICauldronInteraction.MUCUS));
+    public static final RegistryObject<LayeredCauldronBlock> SUS_WATER_CAULDRON_BLOCK = DEFERRED_REGISTER.register("sus_water_cauldron_block",() ->  new LayeredCauldronBlock(BlockBehaviour.Properties.copy(Blocks.CAULDRON).lootFrom(() -> Blocks.CAULDRON), LayeredCauldronBlock.RAIN, ICauldronInteraction.SUS_WATER));
 
     private static boolean never(BlockState p_50806_, BlockGetter p_50807_, BlockPos p_50808_) {
         return false;
