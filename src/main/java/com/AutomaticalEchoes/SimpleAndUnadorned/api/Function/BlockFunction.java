@@ -29,21 +29,10 @@ public interface BlockFunction{
         return p_152134_ == p_152133_ ? (BlockEntityTicker<A>)p_152135_ : null;
     }
 
-    static void serverTick(Level p_155145_, BlockPos p_155146_, BlockState p_155147_, SusSlimeBase p_155148_) {
-        p_155148_.summonSusSlime(p_155145_);
-        p_155148_.powerGrow(p_155145_);
-    }
 
     static  <T extends BlockEntity> BlockEntityTicker SusSlimeTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        return p_153212_.isClientSide ? null : createTickerHelper(p_153214_, BlockRegister.BlockEntityRegister.SUS_SLIME_BASE.get(), BlockFunction::serverTick);
+        return p_153212_.isClientSide ? null : createTickerHelper(p_153214_, BlockRegister.BlockEntityRegister.SUS_SLIME_BASE.get(), SusSlimeBase::serverTick);
     }
 
-    static void onRemove(BlockState p_60515_, Level p_60516_, BlockPos p_60517_, BlockState p_60518_, boolean p_60519_) {
-        if (p_60515_.hasBlockEntity() && (!p_60515_.is(p_60518_.getBlock()) || !p_60518_.hasBlockEntity())) {
-            if(p_60516_.getBlockEntity(p_60517_) instanceof SusSlimeBase susSlimeBase){
-                Containers.dropContents(p_60516_,p_60517_, susSlimeBase.getContainer());
-            }
-            p_60516_.removeBlockEntity(p_60517_);
-        }
-    }
+
 }

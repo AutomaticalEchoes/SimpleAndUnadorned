@@ -34,14 +34,17 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
 
 
 public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier {
     private static final EntityDataAccessor<ItemStack> DATA_ITEM_STACK = SynchedEntityData.defineId(DipolarTubeProjectile.class, EntityDataSerializers.ITEM_STACK);
     private static final EntityDataAccessor<Boolean> TURN = SynchedEntityData.defineId(DipolarTubeProjectile.class,EntityDataSerializers.BOOLEAN);
-    private int tickCount = 0;
     private final ArrayList<DipolarTubeFunc> dipolarTubeFuncArrayList = new ArrayList<>();
     private boolean turn;
+    public  int tickCount = 0;
+    public boolean hit = false;
     @Nullable
     private IntOpenHashSet piercingIgnoreEntityIds;
 
@@ -96,6 +99,7 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
     @Override
     protected void onHit(HitResult p_37260_) {
         super.onHit(p_37260_);
+        hit = true;
         for(DipolarTubeFunc dipolarTubeFunc : dipolarTubeFuncArrayList){
             dipolarTubeFunc.onHit(this,p_37260_);
         }
@@ -123,8 +127,6 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
         }
     }
 
-
-
     @Override
     protected ItemStack getPickupItem() {
         return getItem();
@@ -133,42 +135,41 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
     @Override
     protected void onHitEntity(EntityHitResult p_37259_) {
         Entity entity = p_37259_.getEntity();
-        if (entity.getType() == EntityType.ENDERMAN) {
+        if (entity.getType() == EntityType.ENDERMAN && !isOnGround()) {
             return;
+        }
+        if (this.piercingIgnoreEntityIds == null) {
+            this.piercingIgnoreEntityIds = new IntOpenHashSet(5);
         }
         SoundEvent soundevent = SoundEvents.GLASS_BREAK;
         float f1 = 1.0F;
-
+        this.piercingIgnoreEntityIds.add(entity.getId());
+        this.playSound(soundevent, f1, 1.0F);
+        preHitEntity(p_37259_);
         if (this.getPierceLevel() > 0) {
-            if (this.piercingIgnoreEntityIds == null) {
-                this.piercingIgnoreEntityIds = new IntOpenHashSet(5);
-            }
-            this.piercingIgnoreEntityIds.add(entity.getId());
             this.setPierceLevel((byte) (this.getPierceLevel() - 1));
-            this.playSound(soundevent, f1, 1.0F);
-            preHitEntity(p_37259_);
-        }else {
-            this.playSound(soundevent, f1, 1.0F);
-            preHitEntity(p_37259_);
         }
+        setTurn(!isPassenger());
     }
 
     @Override
     public void tick() {
         super.tick();
+
         if(this.level.isClientSide && Minecraft.getInstance().player.getId() == this.getOwner().getId()){
             if(isTurn()){
                 this.level.addParticle(ParticleTypes.GLOW,this.getX(),this.getY() + 0.3 * random.nextInt(-1,1),this.getZ(),0,0,0);
             }else if(tickCount % 5 == 0){
                 this.level.addParticle(ParticleTypes.GLOW,this.getX() + 0.1 * random.nextInt(-1,1),this.getY() ,this.getZ() + 0.1 * random.nextInt(-1,1),0,10,0);
             }
-
-
         }
-        if(this.isAlive()) tickCount ++ ;
+
+        if(!this.isAlive()) return;
+        tickCount ++ ;
         for(DipolarTubeFunc dipolarTubeFunc : dipolarTubeFuncArrayList){
             dipolarTubeFunc.tick(this, tickCount);
         }
+        findHitEntityOnGround();
     }
 
     @Override
@@ -182,38 +183,6 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
     }
 
     //_____________________________________________________________________________________________________________________________
-    public static void CreateAreaEffectCloudOrInstantenous(ServerLevel serverLevel,Vec3 location, ItemStack itemStack ,Entity entity){
-        int i = 0;
-        AreaEffectCloud areaEffectCloud = new AreaEffectCloud(serverLevel , location.x, location.y, location.z);
-        areaEffectCloud.setRadius(2.0F);
-        areaEffectCloud.setRadiusOnUse(-0.5F);
-        areaEffectCloud.setWaitTime(10);
-        areaEffectCloud.setRadiusPerTick(-areaEffectCloud.getRadius() / (float)areaEffectCloud.getDuration());
-        for(MobEffectInstance mobeffectinstance : PotionUtils.getMobEffects(itemStack)) {
-            if (mobeffectinstance.getEffect().isInstantenous()) {
-                if(entity instanceof LivingEntity livingEntity){
-                    mobeffectinstance.getEffect().applyInstantenousEffect(null, null, livingEntity, mobeffectinstance.getAmplifier(), 1.0D);
-                }else {
-                    entity.hurt(DamageSource.MAGIC,1);
-                }
-
-            } else {
-                areaEffectCloud.addEffect(new MobEffectInstance(mobeffectinstance));
-                i++;
-            }
-        }
-        if(i > 0) serverLevel.addFreshEntity(areaEffectCloud);
-    }
-
-    public static void ApplyEffectToLivingEntity( DipolarTubeProjectile dipolarTubeProjectile,LivingEntity livingEntity ){
-        for(MobEffectInstance mobeffectinstance : PotionUtils.getMobEffects(dipolarTubeProjectile.getItem())) {
-            if (mobeffectinstance.getEffect().isInstantenous()) {
-                mobeffectinstance.getEffect().applyInstantenousEffect(null, null, livingEntity, mobeffectinstance.getAmplifier(), 1.0D);
-            } else {
-                livingEntity.addEffect(new MobEffectInstance(mobeffectinstance));
-            }
-        }
-    }
 
     protected void preHitEntity(EntityHitResult p_36757_){
         for(DipolarTubeFunc dipolarTubeFunc : dipolarTubeFuncArrayList){
@@ -257,6 +226,25 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
 
     public boolean canHitEntity(Entity entity){
         return super.canHitEntity(entity) && (this.piercingIgnoreEntityIds == null || !this.piercingIgnoreEntityIds.contains(entity.getId()));
+    }
+
+    public void findHitEntityOnGround(){
+        if((this.isOnGround() || this.isPassenger()) && level instanceof ServerLevel serverLevel) {
+            float inflate = this.isPassenger() ? this.getVehicle().getBbWidth() / 2 : 0.2F;
+            List<Entity> entities = serverLevel.getEntities(this, this.getBoundingBox().inflate(inflate), this::canHitEntity);
+            if (entities.isEmpty()) return;
+            EntityHitResult hitresult = new EntityHitResult(entities.get(0));
+            Entity entity = hitresult.getEntity();
+            Entity entity1 = this.getOwner();
+            if (entity instanceof Player && entity1 instanceof Player && !((Player) entity1).canHarmPlayer((Player) entity)) {
+                hitresult = null;
+            }
+
+            if (hitresult !=null && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, hitresult)) {
+                this.onHit(hitresult);
+                this.hasImpulse = true;
+            }
+        }
     }
 
 }

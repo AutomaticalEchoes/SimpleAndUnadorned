@@ -34,5 +34,4 @@ public class SuspiciousEnderPearlItem extends Item {
 
         return InteractionResultHolder.sidedSuccess(itemstack, p_41190_.isClientSide());
     }
-
 }

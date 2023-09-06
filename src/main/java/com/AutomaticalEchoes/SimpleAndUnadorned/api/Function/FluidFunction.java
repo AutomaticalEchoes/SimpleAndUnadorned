@@ -4,6 +4,7 @@ package com.AutomaticalEchoes.SimpleAndUnadorned.api.Function;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.entity.SuspiciousSlime;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.event.SusSlimeSummonEvent;
 import com.AutomaticalEchoes.SimpleAndUnadorned.register.ItemsRegister;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -13,7 +14,9 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
@@ -74,16 +77,33 @@ public interface FluidFunction {
         Item item = itemEntity.getItem().getItem();
         if(itemEntity.getAge() > 600 && (item instanceof ArmorItem || item instanceof TieredItem)){
             int i1 = itemEntity.getItem().getMaxDamage() - itemEntity.getItem().getDamageValue();
-            int num = i1 / 100;
-            int exp = i1 % 100;
-            for (int i = 0; i < num; i++) {
-                ExperienceOrb experienceOrb = new ExperienceOrb(itemEntity.level, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), 100);
-                itemEntity.level.addFreshEntity(experienceOrb);
-            }
-            ExperienceOrb experienceOrb = new ExperienceOrb(itemEntity.level, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), exp);
-            itemEntity.level.addFreshEntity(experienceOrb);
+            itemEntity.level.addFreshEntity(new ItemEntity(itemEntity.level,itemEntity.getX(),itemEntity.getY(),itemEntity.getZ(),new ItemStack(ItemsRegister.TRANSPARENT_CRYSTAL.get(),i1/100)));
+            SpawnOrb(i1 % 100 ,itemEntity.level,itemEntity.position());
             itemEntity.discard();
         }
+    }
+
+    static void SpawnOrb(int orbNum, Level level , Vec3 vec3){
+        SpawnOrb(orbNum, level, vec3.x, vec3.y, vec3.z);
+    }
+
+    static void SpawnOrb(int orbNum, Level level , BlockPos pos){
+        SpawnOrb(orbNum,level ,pos.getX(), pos.getY(), pos.getZ());
+    }
+
+    static void SpawnOrb(int orbNum, Level level , double x ,double y ,double z){
+        int num = orbNum / 100;
+        int exp = orbNum % 100;
+        for (int i = 0; i < num; i++) {
+            ExperienceOrb experienceOrb = new ExperienceOrb(level, x, y, z, 100);
+            level.addFreshEntity(experienceOrb);
+        }
+        ExperienceOrb experienceOrb = new ExperienceOrb(level, x, y, z, exp);
+        level.addFreshEntity(experienceOrb);
+    }
+
+    static void SpawnOrb(){
+
     }
 
     static void Summon(ItemEntity entity){

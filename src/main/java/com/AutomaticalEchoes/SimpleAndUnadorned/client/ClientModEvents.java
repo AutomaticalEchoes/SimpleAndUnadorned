@@ -47,6 +47,7 @@ public  class ClientModEvents {
             ItemProperties.register(ItemsRegister.DIPOLAR_TUBE_POTION_ITEM.get(), new ResourceLocation("handing"),
                     (ClampedItemPropertyFunction) (p_174564_, p_174565_, p_174566_, p_174567_) -> p_174566_ != null && p_174566_.isUsingItem() && p_174566_.getUseItem() == p_174564_ ? 1.0F : 0);
         });
+
     }
 
     @SubscribeEvent

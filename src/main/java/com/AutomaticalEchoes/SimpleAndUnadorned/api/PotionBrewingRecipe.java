@@ -20,12 +20,12 @@ public class PotionBrewingRecipe implements IBrewingRecipe {
 
     @Override
     public boolean isInput(ItemStack input) {
-        return PotionUtils.getPotion(input)==this.input;
+        return PotionUtils.getPotion(input) == this.input;
     }
 
     @Override
     public boolean isIngredient(ItemStack ingredient) {
-        return ingredient.getItem()==this.ingredient;
+        return ingredient.getItem() == this.ingredient;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class PotionBrewingRecipe implements IBrewingRecipe {
         if (!this.isInput(input) || !this.isIngredient(ingredient)) {
             return ItemStack.EMPTY;
         }
-        ItemStack itemStack=new ItemStack(input.getItem());
+        ItemStack itemStack = new ItemStack(input.getItem());
         itemStack.setTag(new CompoundTag());
         PotionUtils.setPotion(itemStack,this.output);
         return itemStack;

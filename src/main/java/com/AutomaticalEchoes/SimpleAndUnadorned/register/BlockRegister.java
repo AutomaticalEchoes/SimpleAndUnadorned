@@ -32,7 +32,7 @@ public class BlockRegister {
                     .Properties.of(Material.CLAY, MaterialColor.GRASS)
                     .sound(SoundType.SLIME_BLOCK)
                     .isViewBlocking(BlockRegister::never)
-                    .noOcclusion()).Fluid(FluidRegister.MUCUS).BucketPickupItem(ItemsRegister.MUCUS_BUCKET).CustomCollisionShape(BlockFunction::EmptyWithSlime).BlockEntity(SusSlimeBase::Create).Ticker(BlockFunction::SusSlimeTicker).OnRemove(BlockFunction::onRemove));
+                    .noOcclusion()).Fluid(FluidRegister.MUCUS).BucketPickupItem(ItemsRegister.MUCUS_BUCKET).CustomCollisionShape(BlockFunction::EmptyWithSlime).BlockEntity(SusSlimeBase::Create).Ticker(BlockFunction::SusSlimeTicker).OnRemove(SusSlimeBase::onRemove));
 
     public static final RegistryObject<LayeredCauldronBlock> ACIDITY_CAULDRON_BLOCK = DEFERRED_REGISTER.register("acidity_cauldron_block",() ->  new ILayeredCauldronBlock(BlockBehaviour.Properties.copy(Blocks.CAULDRON).lootFrom(() -> Blocks.CAULDRON), LayeredCauldronBlock.RAIN, ICauldronInteraction.ACIDITY).FluidFunction(FluidFunction::HurtArmor));
     public static final RegistryObject<LayeredCauldronBlock> MUCUS_CAULDRON_BLOCK = DEFERRED_REGISTER.register("mucus_cauldron_block",() ->  new LayeredCauldronBlock(BlockBehaviour.Properties.copy(Blocks.CAULDRON).lootFrom(() -> Blocks.CAULDRON), LayeredCauldronBlock.RAIN, ICauldronInteraction.MUCUS));
@@ -43,7 +43,7 @@ public class BlockRegister {
     }
 
     public class BlockEntityRegister{
-        public static final DeferredRegister<BlockEntityType<?>> DEFERRED_REGISTER =DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES , SimpleAndUnadorned.MODID);
+        public static final DeferredRegister<BlockEntityType<?>> DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES , SimpleAndUnadorned.MODID);
         public static final RegistryObject<BlockEntityType<SusSlimeBase>> SUS_SLIME_BASE = DEFERRED_REGISTER.register("sus_slime_base", () -> BlockEntityType.Builder.of(SusSlimeBase::Create, SUSPICIOUS_SLIME_BLOCK.get()).build(null));
     }
 }

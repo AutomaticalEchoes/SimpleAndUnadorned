@@ -1,4 +1,5 @@
 {
+  "itemGroup.simple_and_unadorned": "朴实无华",
   "item.simple_and_unadorned.suspicious_slime_ball": "史莱姆粘液球？",
   "item.simple_and_unadorned.suspicious_thrown_enderpearl": "末影珍珠？",
   "item.simple_and_unadorned.suspicious_creeper_sac": "可疑的胆囊",
@@ -10,6 +11,9 @@
   "item.simple_and_unadorned.suspicious_water_bucket": "粘滞水桶",
   "item.simple_and_unadorned.mucus_bucket": "史莱姆粘液桶",
   "item.simple_and_unadorned.acidity_bucket": "酸液桶",
+  "item.simple_and_unadorned.sus_enderpearl_powder": "末影珍珠粉末",
+  "item.simple_and_unadorned.transparent_crystal": "通透水晶",
+  "item.simple_and_unadorned.transparent_crystal_powder": "通透水晶粉末",
 
   "item.simple_and_unadorned.dipolar_tube": "双极试管",
   "item.simple_and_unadorned.dipolar_tube_potion.effect.empty": "双极试管",
@@ -67,5 +71,10 @@
   "effect.simple_and_unadorned.rage_target":"狂热标记",
   "effect.simple_and_unadorned.entanglement":"缠绕",
   "effect.simple_and_unadorned.acid_erosion":"酸蚀",
-  "effect.simple_and_unadorned.invalid_armor":"战损"
+  "effect.simple_and_unadorned.invalid_armor":"战损",
+
+  "polarity.swash": "虚张声势",
+  "polarity.paste": "粘附",
+  "polarity.hide": "潜伏",
+  "polarity.burst": "迸发"
 }

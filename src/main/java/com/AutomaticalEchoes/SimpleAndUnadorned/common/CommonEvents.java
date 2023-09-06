@@ -2,6 +2,7 @@ package com.AutomaticalEchoes.SimpleAndUnadorned.common;
 
 import com.AutomaticalEchoes.SimpleAndUnadorned.SimpleAndUnadorned;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.event.SusSlimeSummonEvent;
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.event.SusSlimeWantExpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -13,5 +14,11 @@ public class CommonEvents {
 //        SimpleAndUnadorned.LOGGER.info("on Summon call");
 //
 //    }
+
+    @SubscribeEvent
+    public static void SpawnExpOrbWentWanted(SusSlimeWantExpEvent event){
+        event.getSusSlimeBase().spawnOre();
+    }
+
 
 }

@@ -56,7 +56,8 @@ public class DipolarTube extends ArrowItem implements Vanishable {
     }
 
     public void appendHoverText(ItemStack p_42988_, @Nullable Level p_42989_, List<Component> p_42990_, TooltipFlag p_42991_) {
-        PotionUtils.addPotionTooltip(p_42988_, p_42990_, 1.0F);
+        PotionUtils.addPotionTooltip(p_42988_, p_42990_, 0.25F);
+        DipolarUtils.addPolarityTooltip(p_42988_,p_42990_);
     }
 
     public int getUseDuration(ItemStack p_43001_) {
@@ -80,6 +81,7 @@ public class DipolarTube extends ArrowItem implements Vanishable {
         dipolarTubeProjectile.setTurn(true);
         return dipolarTubeProjectile;
     }
+
 
 
 }

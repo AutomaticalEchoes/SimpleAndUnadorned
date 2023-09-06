@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "simple_and_unadorned:transparent_crystal"
+    }
+  ],
+  "result": {
+    "item": "simple_and_unadorned:transparent_crystal_powder",
+    "count": 4
+  }
+}

@@ -45,6 +45,7 @@ public class SimpleAndUnadorned
         BlockRegister.BlockEntityRegister.DEFERRED_REGISTER.register(modEventBus);
         ItemsRegister.REGISTRY.register(modEventBus);
         PotionRegister.REGISTRY.register(modEventBus);
+        RecipeRegister.REGISTER.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
