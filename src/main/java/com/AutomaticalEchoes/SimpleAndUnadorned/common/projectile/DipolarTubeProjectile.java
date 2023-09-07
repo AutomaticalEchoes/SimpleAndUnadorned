@@ -35,6 +35,7 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 
@@ -225,7 +226,10 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
     }
 
     public boolean canHitEntity(Entity entity){
-        return super.canHitEntity(entity) && (this.piercingIgnoreEntityIds == null || !this.piercingIgnoreEntityIds.contains(entity.getId()));
+        for (DipolarTubeFunc func : dipolarTubeFuncArrayList) {
+            if(!func.shouldHitEntity(this,entity)) return false;
+        }
+        return super.canHitEntity(entity)  && (this.piercingIgnoreEntityIds == null || !this.piercingIgnoreEntityIds.contains(entity.getId()));
     }
 
     public void findHitEntityOnGround(){

@@ -13,10 +13,12 @@ import java.util.HashMap;
 public class Polarity {
     private static final HashMap<Item, Polarity> POLARITIES = new HashMap<>();
     private static final HashMap<String,Polarity> NAME_POLARITY = new HashMap<>();
-    public static final Polarity SWASH = new Polarity("swash" ,2 ,ItemsRegister.TRANSPARENT_CRYSTAL_POWDER.get(),0x7eb1c7,new BaseDipolarTubeFunc().Tick(DipolarTubeFunc::SWASH));
-    public static final Polarity PASTE = new Polarity("paste",3 ,ItemsRegister.SUSPICIOUS_SLIME_BALL.get(),0x38a132,new BaseDipolarTubeFunc().HitEntity(DipolarTubeFunc::PASTE));
-    public static final Polarity HIDE = new Polarity("hide",2,ItemsRegister.SUS_ENDERPEARL_POWDER.get(),0x258474,new BaseDipolarTubeFunc().HitEntity(DipolarTubeFunc::Hide));
-    public static final Polarity BURST = new Polarity("burst",2, Items.BLAZE_POWDER,0xf3ff94,new BaseDipolarTubeFunc().HitEntity(DipolarTubeFunc::Burst));
+    public static final Polarity SWASH = new Polarity("swash" ,2 ,ItemsRegister.TRANSPARENT_CRYSTAL_POWDER.get(),0x7eb1c7,Polarities.SWASH);
+    public static final Polarity PASTE = new Polarity("paste",3 ,ItemsRegister.SUSPICIOUS_SLIME_BALL.get(),0x38a132,Polarities.PASTE);
+    public static final Polarity HIDE = new Polarity("hide",2,ItemsRegister.SUS_ENDERPEARL_POWDER.get(),0x258474,Polarities.HIDE);
+    public static final Polarity BURST = new Polarity("burst",2, Items.BLAZE_POWDER,0xf3ff94,Polarities.BURST);
+
+
     @Nullable
     public static Polarity getPolarity(Item item){
         return POLARITIES.getOrDefault(item, null);

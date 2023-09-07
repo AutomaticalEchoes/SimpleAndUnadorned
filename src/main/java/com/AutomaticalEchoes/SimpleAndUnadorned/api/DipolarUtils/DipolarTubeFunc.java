@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public interface DipolarTubeFunc {
-    boolean CanUse(DipolarTubeProjectile projectile);
+    boolean shouldHitEntity(DipolarTubeProjectile projectile,Entity entity);
     void onHit(DipolarTubeProjectile dipolarTubeProjectile ,HitResult hitResult );
     void onHitEntity(DipolarTubeProjectile dipolarTubeProjectile, EntityHitResult entityHitResult );
     void onHitBlock(DipolarTubeProjectile dipolarTubeProjectile, BlockHitResult blockHitResult );
@@ -51,6 +51,10 @@ public interface DipolarTubeFunc {
                 dipolarTubeProjectile.discard();
             }
         }
+    }
+
+    static boolean Hide_ShouldHitEntity(DipolarTubeProjectile projectile,Entity target){
+        return projectile.isPassenger() || projectile.isOnGround();
     }
 
     static void Hide(DipolarTubeProjectile dipolarTubeProjectile ,EntityHitResult entityHitResult){

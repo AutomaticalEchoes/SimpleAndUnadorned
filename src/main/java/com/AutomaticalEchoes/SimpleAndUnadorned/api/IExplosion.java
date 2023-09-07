@@ -2,6 +2,7 @@ package com.AutomaticalEchoes.SimpleAndUnadorned.api;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import it.unimi.dsi.fastutil.Function;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -25,6 +26,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class IExplosion extends Explosion {
     private static final ExplosionDamageCalculator EXPLOSION_DAMAGE_CALCULATOR = new ExplosionDamageCalculator();
@@ -46,7 +48,10 @@ public class IExplosion extends Explosion {
     private final Vec3 position;
     private boolean ShouldCalculateDamage = true;
     private float BaseDamage = 1.0F;
-    private Collection<MobEffectInstance> collection = Collections.EMPTY_LIST;
+    private boolean ShouldBlowUp = true;
+    private float BlowUpScale = 1.0F;
+    private Consumer<LivingEntity> func;
+    private Collection<MobEffectInstance> effect;
 
     private ExplosionDamageCalculator makeDamageCalculator(@javax.annotation.Nullable Entity p_46063_) {
         return (ExplosionDamageCalculator)(p_46063_ == null ? EXPLOSION_DAMAGE_CALCULATOR : new EntityBasedExplosionDamageCalculator(p_46063_));
@@ -77,8 +82,23 @@ public class IExplosion extends Explosion {
         return this;
     }
 
-    public IExplosion Effects(Collection<MobEffectInstance> c){
-        this.collection = c;
+    public IExplosion Func(Consumer<LivingEntity> func){
+        this.func = func;
+        return this;
+    }
+
+    public IExplosion Effects(Collection<MobEffectInstance> effect){
+        this.effect = effect;
+        return this;
+    }
+
+    public IExplosion ShouldBlow(boolean b){
+        this.ShouldBlowUp = b;
+        return this;
+    }
+
+    public IExplosion BlowUpScale(float f){
+        this.BlowUpScale = f;
         return this;
     }
 
@@ -92,9 +112,9 @@ public class IExplosion extends Explosion {
             for(int k = 0; k < 16; ++k) {
                 for(int l = 0; l < 16; ++l) {
                     if (j == 0 || j == 15 || k == 0 || k == 15 || l == 0 || l == 15) {
-                        double d0 = (double)((float)j / 15.0F * 2.0F - 1.0F);
-                        double d1 = (double)((float)k / 15.0F * 2.0F - 1.0F);
-                        double d2 = (double)((float)l / 15.0F * 2.0F - 1.0F);
+                        double d0 = (float)j / 15.0F * 2.0F - 1.0F;
+                        double d1 = (float)k / 15.0F * 2.0F - 1.0F;
+                        double d2 = (float)l / 15.0F * 2.0F - 1.0F;
                         double d3 = Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
                         d0 /= d3;
                         d1 /= d3;
@@ -160,10 +180,10 @@ public class IExplosion extends Explosion {
                         entity.hurt(this.getDamageSource(), damage);
                         double d11 = d10;
                         if (entity instanceof LivingEntity) {
-                            d11 = ProtectionEnchantment.getExplosionKnockbackAfterDampener((LivingEntity) entity, d10);
+                            d11 = ProtectionEnchantment.getExplosionKnockbackAfterDampener((LivingEntity) entity, d10) * BlowUpScale;
                         }
 
-                        entity.setDeltaMovement(entity.getDeltaMovement().add(d5 * d11, d7 * d11, d9 * d11));
+                        if(ShouldBlowUp) entity.setDeltaMovement(entity.getDeltaMovement().add(d5 * d11, d7 * d11, d9 * d11));
                         if (entity instanceof Player) {
                             Player player = (Player) entity;
                             if (!player.isSpectator() && (!player.isCreative() || !player.getAbilities().flying)) {
@@ -171,8 +191,9 @@ public class IExplosion extends Explosion {
                             }
                         }
                     }
-                    if(entity instanceof LivingEntity livingEntity && collection.size() != 0){
-                        for (MobEffectInstance mobEffectInstance : collection){
+                    if(entity instanceof LivingEntity livingEntity){
+                        func.accept(livingEntity);
+                        for (MobEffectInstance mobEffectInstance : effect){
                             livingEntity.addEffect(new MobEffectInstance(mobEffectInstance), this.source);
                         }
                     }

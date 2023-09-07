@@ -1,6 +1,7 @@
 package com.AutomaticalEchoes.SimpleAndUnadorned.api.DipolarUtils;
 
 
+import com.AutomaticalEchoes.SimpleAndUnadorned.api.Function.EffectFunction;
 import com.AutomaticalEchoes.SimpleAndUnadorned.api.IExplosion;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.projectile.DipolarTubeProjectile;
 import com.AutomaticalEchoes.SimpleAndUnadorned.register.ItemsRegister;
@@ -98,21 +99,15 @@ public class DipolarUtils{
     }
 
     public static void ApplyEffectToLivingEntity( DipolarTubeProjectile dipolarTubeProjectile,LivingEntity livingEntity ){
-        for(MobEffectInstance mobeffectinstance : PotionUtils.getMobEffects(dipolarTubeProjectile.getItem())) {
-            if (mobeffectinstance.getEffect().isInstantenous()) {
-                mobeffectinstance.getEffect().applyInstantenousEffect(null, null, livingEntity, mobeffectinstance.getAmplifier(), 1.0D);
-            } else {
-                livingEntity.addEffect(new MobEffectInstance(mobeffectinstance));
-            }
-        }
+        EffectFunction.applyEffect(livingEntity,PotionUtils.getMobEffects(dipolarTubeProjectile.getItem()));
     }
-
 
     public static void Explode(DipolarTubeProjectile dipolarTubeProjectile){
         List<MobEffectInstance> collection = new ArrayList<>(PotionUtils.getMobEffects(dipolarTubeProjectile.getItem()));
         ServerLevel serverLevel = (ServerLevel) dipolarTubeProjectile.level;
         Explosion explosion = new IExplosion(serverLevel,dipolarTubeProjectile,null,null, dipolarTubeProjectile.getX(), dipolarTubeProjectile.getY(), dipolarTubeProjectile.getZ(), 5 ,false, Explosion.BlockInteraction.NONE)
                 .BaseDamage(1.0F)
+                .ShouldBlow(false)
                 .Effects(collection)
                 .ShouldCalculateDamage(false);
 

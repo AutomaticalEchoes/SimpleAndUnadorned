@@ -7,7 +7,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.item.alchemy.PotionUtils;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Predicate;
@@ -29,6 +31,16 @@ public interface EffectFunction {
             for (Monster monster:entities) {
                 if(monster.getTarget() == null) monster.setTarget(p_19467_);
                 monster.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED,2400,random.nextInt(2)+ ModCommonConfig.RAGE_TARGET_EFFECT_SPEEDUP_LEVEL.get() ));
+            }
+        }
+    }
+
+    static void applyEffect(LivingEntity livingEntity, Collection<MobEffectInstance> mobEffects){
+        for(MobEffectInstance mobeffectinstance : mobEffects) {
+            if (mobeffectinstance.getEffect().isInstantenous()) {
+                mobeffectinstance.getEffect().applyInstantenousEffect(null, null, livingEntity, mobeffectinstance.getAmplifier(), 1.0D);
+            } else {
+                livingEntity.addEffect(new MobEffectInstance(mobeffectinstance));
             }
         }
     }
