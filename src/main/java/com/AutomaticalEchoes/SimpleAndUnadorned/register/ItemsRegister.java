@@ -3,6 +3,7 @@ package com.AutomaticalEchoes.SimpleAndUnadorned.register;
 import com.AutomaticalEchoes.SimpleAndUnadorned.SimpleAndUnadorned;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.item.DipolarTube;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.item.SuspiciousEnderPearlItem;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -15,6 +16,8 @@ public class ItemsRegister {
         return new Item.Properties().tab(SimpleAndUnadorned.SIMPLE_AND_UNADORNED_TAB) ;
     }
     public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, SimpleAndUnadorned.MODID);
+
+//    public static final RegistryObject<Item> SUS_ENDER_WOOL_ITEM = REGISTRY.register("sus_ender_wool_item",() -> new BlockItem(BlockRegister.SUS_WOOL.get(),CreateProperties()));
 
     public static final RegistryObject<Item> SUSPICIOUS_THROWN_ENDERPEARL_ITEM = REGISTRY.register("suspicious_thrown_enderpearl", () -> new SuspiciousEnderPearlItem(CreateProperties()));
     public static final RegistryObject<Item> SUS_ENDERPEARL_POWDER = REGISTRY.register("sus_enderpearl_powder",() -> new Item(CreateProperties()));

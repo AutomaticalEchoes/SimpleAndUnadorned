@@ -50,11 +50,11 @@ public class IExplosion extends Explosion {
     private float BaseDamage = 1.0F;
     private boolean ShouldBlowUp = true;
     private float BlowUpScale = 1.0F;
-    private Consumer<LivingEntity> func;
+    private Consumer<LivingEntity> func = livingEntity -> {};
     private Collection<MobEffectInstance> effect;
 
     private ExplosionDamageCalculator makeDamageCalculator(@javax.annotation.Nullable Entity p_46063_) {
-        return (ExplosionDamageCalculator)(p_46063_ == null ? EXPLOSION_DAMAGE_CALCULATOR : new EntityBasedExplosionDamageCalculator(p_46063_));
+        return p_46063_ == null ? EXPLOSION_DAMAGE_CALCULATOR : new EntityBasedExplosionDamageCalculator(p_46063_);
     }
 
     public IExplosion(Level p_46051_, @Nullable Entity p_46052_, @Nullable DamageSource p_46053_, @Nullable ExplosionDamageCalculator p_46054_, double p_46055_, double p_46056_, double p_46057_, float p_46058_, boolean p_46059_, BlockInteraction p_46060_) {

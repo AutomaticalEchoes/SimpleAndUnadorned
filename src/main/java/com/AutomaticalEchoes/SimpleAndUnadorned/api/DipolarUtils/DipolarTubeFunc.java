@@ -37,7 +37,7 @@ public interface DipolarTubeFunc {
 
     static void Total(DipolarTubeProjectile dipolarTubeProjectile, EntityHitResult entityHitResult){
         if (dipolarTubeProjectile.level instanceof ServerLevel && entityHitResult.getEntity() instanceof LivingEntity livingEntity && !livingEntity.isBlocking()) {
-            DipolarUtils.ApplyEffectToLivingEntity(dipolarTubeProjectile,livingEntity);
+            DipolarUtils.ApplyEffectToLivingEntity(dipolarTubeProjectile,livingEntity,0.25,dipolarTubeProjectile.getOwner());
             if(dipolarTubeProjectile.getPierceLevel() <= 0){
                 dipolarTubeProjectile.discard();
             }
@@ -46,10 +46,10 @@ public interface DipolarTubeFunc {
 
     static void Burst(DipolarTubeProjectile dipolarTubeProjectile, EntityHitResult entityHitResult){
         if (dipolarTubeProjectile.level instanceof ServerLevel serverLevel && entityHitResult.getEntity() instanceof LivingEntity livingEntity && !livingEntity.isBlocking()) {
-            DipolarUtils.CreateAreaEffectCloudOrInstantenous(serverLevel,livingEntity.position(), dipolarTubeProjectile.getItem(),livingEntity);
-            if(dipolarTubeProjectile.getPierceLevel() <= 0){
-                dipolarTubeProjectile.discard();
-            }
+            Entity owner = dipolarTubeProjectile.getOwner();
+            boolean isLiving = owner instanceof LivingEntity ;
+            DipolarUtils.CreateAreaEffectCloudOrInstantenous(serverLevel,livingEntity.position(), dipolarTubeProjectile.getItem(),livingEntity,1.0F * (1 + dipolarTubeProjectile.getPierceLevel()),isLiving ? (LivingEntity) owner : null);
+            dipolarTubeProjectile.discard();
         }
     }
 
@@ -59,8 +59,9 @@ public interface DipolarTubeFunc {
 
     static void Hide(DipolarTubeProjectile dipolarTubeProjectile ,EntityHitResult entityHitResult){
         if (dipolarTubeProjectile.level instanceof ServerLevel serverLevel &&( dipolarTubeProjectile.isOnGround() || dipolarTubeProjectile.isPassenger() )) {
-            dipolarTubeProjectile.playSound(SoundEvents.GLASS_BREAK);
-            DipolarUtils.CreateAreaEffectCloudOrInstantenous(serverLevel,dipolarTubeProjectile.position(), dipolarTubeProjectile.getItem(),entityHitResult.getEntity());
+            Entity owner = dipolarTubeProjectile.getOwner();
+            boolean isLiving = owner instanceof LivingEntity ;
+            DipolarUtils.CreateAreaEffectCloudOrInstantenous(serverLevel,dipolarTubeProjectile.position(), dipolarTubeProjectile.getItem(),entityHitResult.getEntity(),2.0F,isLiving ? (LivingEntity) owner : null);
             if(dipolarTubeProjectile.isOnGround()){
                 List<Entity> entities = serverLevel.getEntities(dipolarTubeProjectile, dipolarTubeProjectile.getBoundingBox().inflate(0.2F), dipolarTubeProjectile::canHitEntity);
                 entities.forEach(entity -> entity.setDeltaMovement(entity.getEyePosition().subtract(dipolarTubeProjectile.position()).normalize().scale(0.2)));

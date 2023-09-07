@@ -1,21 +1,16 @@
 package com.AutomaticalEchoes.SimpleAndUnadorned.common.item;
 
-import com.AutomaticalEchoes.SimpleAndUnadorned.SimpleAndUnadorned;
 import com.AutomaticalEchoes.SimpleAndUnadorned.api.DipolarUtils.DipolarUtils;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.projectile.DipolarTubeProjectile;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
@@ -82,6 +77,9 @@ public class DipolarTube extends ArrowItem implements Vanishable {
         return dipolarTubeProjectile;
     }
 
+    public ItemStack getDefaultInstance() {
+        return PotionUtils.setPotion(super.getDefaultInstance(), Potions.POISON);
+    }
 
 
 }

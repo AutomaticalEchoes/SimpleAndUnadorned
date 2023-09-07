@@ -68,7 +68,8 @@ public interface FluidFunction {
 
     static boolean HurtArmor(LivingEntity livingEntity){
         if(livingEntity instanceof Player player){
-            player.getInventory().hurtArmor(DamageSource.GENERIC,4,player.isSwimming() && player.isSprinting()?  ALL: PART);
+
+            player.getInventory().hurtArmor(DamageSource.GENERIC,4,player.isUnderWater()?  ALL: PART);
         }
         return false;
     }
@@ -100,10 +101,6 @@ public interface FluidFunction {
         }
         ExperienceOrb experienceOrb = new ExperienceOrb(level, x, y, z, exp);
         level.addFreshEntity(experienceOrb);
-    }
-
-    static void SpawnOrb(){
-
     }
 
     static void Summon(ItemEntity entity){

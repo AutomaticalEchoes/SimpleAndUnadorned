@@ -8,7 +8,6 @@ import net.minecraft.world.entity.player.Player;
 
 
 public class AcidErosion extends MobEffect {
-    private static final int[] INT={0,1,2,3};
     public AcidErosion(MobEffectCategory p_19451_, int p_19452_) {
         super(p_19451_, p_19452_);
     }

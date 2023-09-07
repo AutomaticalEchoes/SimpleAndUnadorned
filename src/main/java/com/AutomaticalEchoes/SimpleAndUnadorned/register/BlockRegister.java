@@ -25,6 +25,7 @@ import java.util.function.Supplier;
 public class BlockRegister {
     public static final DeferredRegister<Block> DEFERRED_REGISTER =DeferredRegister.create(ForgeRegistries.BLOCKS , SimpleAndUnadorned.MODID);
 
+    public static final RegistryObject<Block> SUS_WOOL = DEFERRED_REGISTER.register("sus_end_portal_wool",() ->new Block(BlockBehaviour.Properties.copy(Blocks.ACACIA_WOOD)));
     public static final RegistryObject<LiquidBlock> ACIDITY = DEFERRED_REGISTER.register("acidity",() -> new LiquidBlock(FluidRegister.ACIDITY, BlockBehaviour.Properties.of(Material.WATER).lightLevel(value -> 4).noCollission().strength(100.0F).noLootTable()));
     public static final RegistryObject<NonNewtonianFluidBlock> SUSPICIOUS_WATER = DEFERRED_REGISTER.register("suspicious_water",() -> new NonNewtonianFluidBlock(BlockBehaviour.Properties.of(Material.WATER).lightLevel(value -> 9).noCollission().strength(100.0F).noLootTable()));
     public static final RegistryObject<NonNewtonianFluidBlock> SUSPICIOUS_SLIME_BLOCK = DEFERRED_REGISTER.register("suspicious_slime_block",

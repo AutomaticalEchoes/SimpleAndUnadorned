@@ -25,6 +25,7 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -57,7 +58,7 @@ public class DipolarUtils{
 
     public static boolean isConflict(List<Polarity> polarities, Polarity polarity){
         if(polarities.isEmpty()) return false;
-        Optional<Polarity> first = polarities.stream().filter(insPolarity -> polarity.getLogicalNum().equals(insPolarity.getLogicalNum())).findFirst();
+        Optional<Polarity> first = polarities.stream().filter(insPolarity -> (polarity.getLogicalNum() & insPolarity.getLogicalNum()) != 0).findFirst();
         return first.isPresent();
     }
 
@@ -75,31 +76,12 @@ public class DipolarUtils{
         return polarity.size() < 2;
     }
 
-    public static void CreateAreaEffectCloudOrInstantenous(ServerLevel serverLevel, Vec3 location, ItemStack itemStack , Entity entity){
-        int i = 0;
-        AreaEffectCloud areaEffectCloud = new AreaEffectCloud(serverLevel , location.x, location.y, location.z);
-        areaEffectCloud.setRadius(2.0F);
-        areaEffectCloud.setRadiusOnUse(-0.5F);
-        areaEffectCloud.setWaitTime(10);
-        areaEffectCloud.setRadiusPerTick(-areaEffectCloud.getRadius() / (float)areaEffectCloud.getDuration());
-        for(MobEffectInstance mobeffectinstance : PotionUtils.getMobEffects(itemStack)) {
-            if (mobeffectinstance.getEffect().isInstantenous()) {
-                if(entity instanceof LivingEntity livingEntity){
-                    mobeffectinstance.getEffect().applyInstantenousEffect(null, null, livingEntity, mobeffectinstance.getAmplifier(), 1.0D);
-                }else {
-                    entity.hurt(DamageSource.MAGIC,1);
-                }
-
-            } else {
-                areaEffectCloud.addEffect(new MobEffectInstance(mobeffectinstance));
-                i++;
-            }
-        }
-        if(i > 0) serverLevel.addFreshEntity(areaEffectCloud);
+    public static void CreateAreaEffectCloudOrInstantenous(ServerLevel serverLevel, Vec3 location, ItemStack itemStack , Entity entity, float radius, @Nullable LivingEntity source){
+       EffectFunction.CreateAreaEffectCloudOrInstantenous(serverLevel,location,PotionUtils.getMobEffects(itemStack),entity,radius,10,0.25,source);
     }
 
-    public static void ApplyEffectToLivingEntity( DipolarTubeProjectile dipolarTubeProjectile,LivingEntity livingEntity ){
-        EffectFunction.applyEffect(livingEntity,PotionUtils.getMobEffects(dipolarTubeProjectile.getItem()));
+    public static void ApplyEffectToLivingEntity( DipolarTubeProjectile dipolarTubeProjectile,LivingEntity livingEntity ,double scale , Entity source ){
+        EffectFunction.applyEffect(livingEntity,PotionUtils.getMobEffects(dipolarTubeProjectile.getItem()),scale,source);
     }
 
     public static void Explode(DipolarTubeProjectile dipolarTubeProjectile){

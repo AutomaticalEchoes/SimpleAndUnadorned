@@ -38,7 +38,7 @@ public class ModCommonConfig {
         BUILDER.push("myMod config");
         BUILDER.push("rage effect");
         RAGE_TARGET_EFFECT_DURATION_TICK=BUILDER.defineInRange("rage effect duration tick",35,1,60);
-        RAGE_TARGET_EFFECT_SPEEDUP_LEVEL=BUILDER.comment("monster speed up level while range").define("speed up leve",4);
+        RAGE_TARGET_EFFECT_SPEEDUP_LEVEL=BUILDER.comment("monster speed up level while range").define("speed up leve",2);
         BUILDER.pop();
 
         BUILDER.push("creeper");

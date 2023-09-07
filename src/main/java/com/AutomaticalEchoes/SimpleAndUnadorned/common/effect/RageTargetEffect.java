@@ -14,7 +14,7 @@ public class RageTargetEffect extends MobEffect {
 
     @Override
     public void applyEffectTick(LivingEntity p_19467_, int p_19468_) {
-        EffectFunction.applyRageEffectTick(p_19467_);
+        EffectFunction.Rage(p_19467_);
     }
 
     @Override

@@ -13,10 +13,10 @@ import java.util.HashMap;
 public class Polarity {
     private static final HashMap<Item, Polarity> POLARITIES = new HashMap<>();
     private static final HashMap<String,Polarity> NAME_POLARITY = new HashMap<>();
-    public static final Polarity SWASH = new Polarity("swash" ,2 ,ItemsRegister.TRANSPARENT_CRYSTAL_POWDER.get(),0x7eb1c7,Polarities.SWASH);
-    public static final Polarity PASTE = new Polarity("paste",3 ,ItemsRegister.SUSPICIOUS_SLIME_BALL.get(),0x38a132,Polarities.PASTE);
-    public static final Polarity HIDE = new Polarity("hide",2,ItemsRegister.SUS_ENDERPEARL_POWDER.get(),0x258474,Polarities.HIDE);
-    public static final Polarity BURST = new Polarity("burst",2, Items.BLAZE_POWDER,0xf3ff94,Polarities.BURST);
+    public static final Polarity SWASH = new Polarity("swash" , (byte) 1,ItemsRegister.TRANSPARENT_CRYSTAL_POWDER.get(),0x7eb1c7,Polarities.SWASH);
+    public static final Polarity PASTE = new Polarity("paste", (byte) 2,Items.SLIME_BALL,0x38a132,Polarities.PASTE);
+    public static final Polarity HIDE = new Polarity("hide", (byte) 1,ItemsRegister.SUS_ENDERPEARL_POWDER.get(),0x258474,Polarities.HIDE);
+    public static final Polarity BURST = new Polarity("burst", (byte) 3, Items.BLAZE_POWDER,0xf3ff94,Polarities.BURST);
 
 
     @Nullable
@@ -34,9 +34,9 @@ public class Polarity {
     private final Integer Color;
     private final Item MapItem;
     private final DipolarTubeFunc Func;
-    private final Integer LogicalNum;
+    private final Byte LogicalNum;
 
-    Polarity(String name, int logicalNum, Item item, int color, DipolarTubeFunc func) {
+    Polarity(String name, byte logicalNum, Item item, int color, DipolarTubeFunc func) {
         this.Name = name;
         this.Color = color;
         this.MapItem = item;
@@ -68,7 +68,7 @@ public class Polarity {
         return Func;
     }
 
-    public Integer getLogicalNum() {
+    public Byte getLogicalNum() {
         return LogicalNum;
     }
 }
