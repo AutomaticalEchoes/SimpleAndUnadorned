@@ -41,14 +41,11 @@ public class DipolarTubeRender extends EntityRenderer<DipolarTubeProjectile> {
     public void render(DipolarTubeProjectile p_116085_, float p_116086_, float p_116087_, PoseStack p_116088_, MultiBufferSource p_116089_, int p_116090_) {
         if (p_116085_.TickCount() >= 2 || !(this.entityRenderDispatcher.camera.getEntity().distanceToSqr(p_116085_) < 12.25D)) {
             p_116088_.pushPose();
-            p_116088_.translate(0,-0.2F,0);
+            p_116088_.translate(0,0.25F,0);
             p_116088_.scale(this.scale, this.scale, this.scale);
             float v = Mth.lerp(p_116087_, p_116085_.yRotO, p_116085_.getYRot()) ;
-            if(p_116085_.isTurn()){
-                v = v - 90.0F;
-                p_116088_.mulPose(Vector3f.ZP.rotationDegrees(p_116085_.TickCount()* 30F));
-            }
-            p_116088_.mulPose(Vector3f.YP.rotationDegrees(v));
+            p_116088_.mulPose(Vector3f.ZP.rotationDegrees(p_116085_.turnAngle * 30F));
+            p_116088_.mulPose(Vector3f.YP.rotationDegrees(p_116085_.turnAngle > 0 ? v - 90.0F :  v));
             this.itemRenderer.renderStatic(p_116085_.getItem(), ItemTransforms.TransformType.GROUND, p_116090_, OverlayTexture.NO_OVERLAY, p_116088_, p_116089_, p_116085_.getId());
             p_116088_.popPose();
             super.render(p_116085_, p_116086_, p_116087_, p_116088_, p_116089_, p_116090_);

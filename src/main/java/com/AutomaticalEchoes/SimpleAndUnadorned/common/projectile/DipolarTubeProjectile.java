@@ -45,6 +45,7 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
     private final ArrayList<DipolarTubeFunc> dipolarTubeFuncArrayList = new ArrayList<>();
     private boolean turn;
     public  int tickCount = 0;
+    public int turnAngle = 0;
     public boolean hit = false;
     @Nullable
     private IntOpenHashSet piercingIgnoreEntityIds;
@@ -159,6 +160,7 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
 
         if(this.level.isClientSide && Minecraft.getInstance().player.getId() == this.getOwner().getId()){
             if(isTurn()){
+                this.turnAngle++;
                 this.level.addParticle(ParticleTypes.GLOW,this.getX(),this.getY() + 0.3 * random.nextInt(-1,1),this.getZ(),0,0,0);
             }else if(tickCount % 5 == 0){
                 this.level.addParticle(ParticleTypes.GLOW,this.getX() + 0.1 * random.nextInt(-1,1),this.getY() ,this.getZ() + 0.1 * random.nextInt(-1,1),0,10,0);

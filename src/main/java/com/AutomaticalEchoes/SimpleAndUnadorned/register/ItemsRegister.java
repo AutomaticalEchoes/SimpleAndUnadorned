@@ -17,8 +17,6 @@ public class ItemsRegister {
     }
     public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, SimpleAndUnadorned.MODID);
 
-//    public static final RegistryObject<Item> SUS_ENDER_WOOL_ITEM = REGISTRY.register("sus_ender_wool_item",() -> new BlockItem(BlockRegister.SUS_WOOL.get(),CreateProperties()));
-
     public static final RegistryObject<Item> SUSPICIOUS_THROWN_ENDERPEARL_ITEM = REGISTRY.register("suspicious_thrown_enderpearl", () -> new SuspiciousEnderPearlItem(CreateProperties()));
     public static final RegistryObject<Item> SUS_ENDERPEARL_POWDER = REGISTRY.register("sus_enderpearl_powder",() -> new Item(CreateProperties()));
 
@@ -30,6 +28,7 @@ public class ItemsRegister {
     public static final RegistryObject<Item> SUSPICIOUS_WATER_BUCKET = REGISTRY.register("suspicious_water_bucket",()-> new BucketItem(FluidRegister.SUSPICIOUS_WATER,(new Item.Properties()).craftRemainder(Items.BUCKET).stacksTo(1).tab(SimpleAndUnadorned.SIMPLE_AND_UNADORNED_TAB)));
     public static final RegistryObject<Item> TRANSPARENT_CRYSTAL = REGISTRY.register("transparent_crystal",() -> new Item(CreateProperties()));
     public static final RegistryObject<Item> TRANSPARENT_CRYSTAL_POWDER = REGISTRY.register("transparent_crystal_powder",() -> new Item(CreateProperties()));
+    public static final RegistryObject<Item> TRANSPARENT_CRYSTAL_BLOCK_ITEM = REGISTRY.register("transparent_crystal_block_item",() -> new BlockItem(BlockRegister.TRANSPARENT_CRYSTAL_BLOCK.get(),CreateProperties()));
 
     public static final RegistryObject<Item> DIPOLAR_TUBE_POTION_ITEM = REGISTRY.register("dipolar_tube_potion",() -> new DipolarTube(CreateProperties()));
     public static final RegistryObject<Item> DIPOLAR_TUBE_ITEM = REGISTRY.register("dipolar_tube",() -> new Item(CreateProperties()));

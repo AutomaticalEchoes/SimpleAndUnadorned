@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "render_type": "translucent",
+  "textures": {
+    "all": "simple_and_unadorned:block/transparent_crystal_block"
+  }
+}

@@ -1,6 +1,0 @@
-{
-  "render_type": "ender_portal",
-  "textures": {
-    "particle": "minecraft:block/obsidian"
-  }
-}

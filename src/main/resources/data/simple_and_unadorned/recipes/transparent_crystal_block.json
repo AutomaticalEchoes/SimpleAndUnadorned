@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "111",
+    "111",
+    "111"
+  ],
+  "key": {
+    "1": {
+      "item": "simple_and_unadorned:transparent_crystal"
+    }
+  },
+  "result": {
+    "item": "simple_and_unadorned:transparent_crystal_block_item",
+    "count": 1
+  }
+}
