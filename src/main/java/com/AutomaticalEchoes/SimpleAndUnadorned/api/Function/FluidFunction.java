@@ -7,6 +7,7 @@ import com.AutomaticalEchoes.SimpleAndUnadorned.register.ItemsRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
@@ -17,6 +18,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
@@ -62,13 +64,21 @@ public interface FluidFunction {
         return true;
     }
 
+    static boolean HurtArmorAndTransform(BlockState state ,Level level ,BlockPos pos ,Entity entity){
+        if(entity instanceof LivingEntity livingEntity){
+            HurtArmor(livingEntity);
+        }else if(entity instanceof ItemEntity itemEntity){
+            Transform(itemEntity);
+        }
+        return false;
+    }
+
     static boolean HurtArmor(FluidState state, LivingEntity livingEntity, Vec3 movementVector, double gravity){
         return HurtArmor(livingEntity);
     }
 
     static boolean HurtArmor(LivingEntity livingEntity){
         if(livingEntity instanceof Player player){
-
             player.getInventory().hurtArmor(DamageSource.GENERIC,4,player.isUnderWater()?  ALL: PART);
         }
         return false;
