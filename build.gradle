@@ -30,7 +30,7 @@ plugins {
 //}
 
 
-version = 'api'
+version = '1.4'
 group = 'com.automaticalechoes.simpleandunadorned' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'simpleandunadorned'
 
