@@ -8,18 +8,16 @@ on:
   push:
     branches:
       - Base
-name: release-please
+
+name: Release
+
 jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
-      - uses: google-github-actions/release-please-action@v3
+      - uses: GoogleCloudPlatform/release-please-action@v3
         id: release
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           release-type: java
-      - name: Upload Release Artifact
-        if: ${{ steps.release.outputs.release_created }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run:
-          gh release upload ${{ steps.release.outputs.tag_name }} ./artifact/some-build-artifact.zip
+          package-name: standard-version
