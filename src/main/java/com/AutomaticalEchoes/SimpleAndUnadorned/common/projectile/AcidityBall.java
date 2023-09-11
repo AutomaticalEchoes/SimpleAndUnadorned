@@ -1,6 +1,6 @@
 package com.AutomaticalEchoes.SimpleAndUnadorned.common.projectile;
 
-import com.AutomaticalEchoes.SimpleAndUnadorned.common.entity.SuspiciousSlime;
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SuspiciousSlime.SuspiciousSlime;
 import com.AutomaticalEchoes.SimpleAndUnadorned.config.ModCommonConfig;
 import com.AutomaticalEchoes.SimpleAndUnadorned.register.EffectsRegister;
 import com.AutomaticalEchoes.SimpleAndUnadorned.register.EntityRegister;

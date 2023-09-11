@@ -1,16 +1,15 @@
 package com.AutomaticalEchoes.SimpleAndUnadorned.api.Function;
 
 
-import com.AutomaticalEchoes.SimpleAndUnadorned.common.entity.SuspiciousSlime;
+import com.AutomaticalEchoes.SimpleAndUnadorned.api.IExperienceOrb;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.event.SusSlimeSummonEvent;
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SuspiciousSlime.SuspiciousSlime;
+import com.AutomaticalEchoes.SimpleAndUnadorned.register.EntityRegister;
 import com.AutomaticalEchoes.SimpleAndUnadorned.register.ItemsRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.ExperienceOrb;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
@@ -22,6 +21,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public interface FluidFunction {
     float FRICTION = 0.6F;
@@ -79,39 +82,22 @@ public interface FluidFunction {
 
     static boolean HurtArmor(LivingEntity livingEntity){
         if(livingEntity instanceof Player player){
-            player.getInventory().hurtArmor(DamageSource.GENERIC,4,player.isUnderWater()?  ALL: PART);
+            player.getInventory().hurtArmor(DamageSource.GENERIC,4,player.isUnderWater() || player.getForcedPose() == Pose.FALL_FLYING?  ALL: PART);
         }
         return false;
     }
 
     static void Transform(ItemEntity itemEntity){
         Item item = itemEntity.getItem().getItem();
-        if(itemEntity.getAge() > 600 && (item instanceof ArmorItem || item instanceof TieredItem)){
+        if(itemEntity.level instanceof ServerLevel serverLevel && itemEntity.getAge() > 600 && (item instanceof ArmorItem || item instanceof TieredItem)){
             int i1 = itemEntity.getItem().getMaxDamage() - itemEntity.getItem().getDamageValue();
             itemEntity.level.addFreshEntity(new ItemEntity(itemEntity.level,itemEntity.getX(),itemEntity.getY(),itemEntity.getZ(),new ItemStack(ItemsRegister.TRANSPARENT_CRYSTAL.get(),i1/100)));
-            SpawnOrb(i1 % 100 ,itemEntity.level,itemEntity.position());
+            IExperienceOrb.Award(serverLevel ,itemEntity.position(), i1 % 100, List.of(EntityRegister.SUSPICIOUS_SLIME.get()));
             itemEntity.discard();
         }
     }
 
-    static void SpawnOrb(int orbNum, Level level , Vec3 vec3){
-        SpawnOrb(orbNum, level, vec3.x, vec3.y, vec3.z);
-    }
 
-    static void SpawnOrb(int orbNum, Level level , BlockPos pos){
-        SpawnOrb(orbNum,level ,pos.getX(), pos.getY(), pos.getZ());
-    }
-
-    static void SpawnOrb(int orbNum, Level level , double x ,double y ,double z){
-        int num = orbNum / 100;
-        int exp = orbNum % 100;
-        for (int i = 0; i < num; i++) {
-            ExperienceOrb experienceOrb = new ExperienceOrb(level, x, y, z, 100);
-            level.addFreshEntity(experienceOrb);
-        }
-        ExperienceOrb experienceOrb = new ExperienceOrb(level, x, y, z, exp);
-        level.addFreshEntity(experienceOrb);
-    }
 
     static void Summon(ItemEntity entity){
         if(entity.getItem().getItem() == ItemsRegister.SUSPICIOUS_SLIME_BALL.get() && entity.level instanceof ServerLevel level){

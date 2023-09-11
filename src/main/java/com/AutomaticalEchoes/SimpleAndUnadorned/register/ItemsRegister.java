@@ -7,6 +7,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -32,4 +33,13 @@ public class ItemsRegister {
 
     public static final RegistryObject<Item> DIPOLAR_TUBE_POTION_ITEM = REGISTRY.register("dipolar_tube_potion",() -> new DipolarTube(CreateProperties()));
     public static final RegistryObject<Item> DIPOLAR_TUBE_ITEM = REGISTRY.register("dipolar_tube",() -> new Item(CreateProperties()));
+
+    public static final RegistryObject<Item> SUSPICIOUS_CREEPER_EGG = REGISTRY.register("suspicious_creeper_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegister.SUSPICIOUS_CREEPER,894731, 0,CreateProperties()));
+    public static final RegistryObject<Item> SUSPICIOUS_SLIME_EGG = REGISTRY.register("suspicious_slime_spawn_egg",
+            () ->new ForgeSpawnEggItem(EntityRegister.SUSPICIOUS_SLIME,5349438, 8306542,CreateProperties()));
+    public static final RegistryObject<Item> MINI_SUSPICIOUS_CREEPER = REGISTRY.register("mini_suspicious_creeper_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityRegister.MINI_SUS_CREEPER,894737, 0,CreateProperties()));
+    public static final RegistryObject<Item> SUSPICIOUS_ENDERMAN_EGG = REGISTRY.register("suspicious_enderman_spawn_egg",
+            () ->new ForgeSpawnEggItem(EntityRegister.SUSPICIOUS_ENDERMAN,1447446, 0,CreateProperties()));
 }

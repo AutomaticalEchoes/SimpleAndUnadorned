@@ -1,9 +1,7 @@
 package com.AutomaticalEchoes.SimpleAndUnadorned.api.DipolarUtils;
 
-import com.AutomaticalEchoes.SimpleAndUnadorned.SimpleAndUnadorned;
 import com.AutomaticalEchoes.SimpleAndUnadorned.register.ItemsRegister;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 

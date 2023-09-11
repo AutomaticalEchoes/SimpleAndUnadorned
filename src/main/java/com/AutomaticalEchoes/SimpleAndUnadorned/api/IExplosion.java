@@ -2,7 +2,6 @@ package com.AutomaticalEchoes.SimpleAndUnadorned.api;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import it.unimi.dsi.fastutil.Function;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;

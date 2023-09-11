@@ -1,0 +1,15 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "minecraft:lush_caves",
+    "minecraft:dark_forest",
+    "minecraft:jungle",
+    "minecraft:bamboo_jungle"
+  ],
+  "spawners": {
+    "type": "simple_and_unadorned:mini_suspicious_creeper",
+    "weight": 80,
+    "minCount": 1,
+    "maxCount": 1
+  }
+}

@@ -8,12 +8,14 @@
   "item.simple_and_unadorned.suspicious_skeleton_spawn_egg": "可疑的骷髅刷怪蛋",
   "item.simple_and_unadorned.suspicious_enderman_spawn_egg": "可疑的末影人刷怪蛋",
   "item.simple_and_unadorned.suspicious_slime_spawn_egg": "可疑的史莱姆刷怪蛋",
+  "item.simple_and_unadorned.mini_suspicious_creeper_spawn_egg": "迷你爬行者刷怪蛋",
   "item.simple_and_unadorned.suspicious_water_bucket": "粘滞水桶",
   "item.simple_and_unadorned.mucus_bucket": "史莱姆粘液桶",
   "item.simple_and_unadorned.acidity_bucket": "酸液桶",
   "item.simple_and_unadorned.sus_enderpearl_powder": "末影珍珠粉末",
   "item.simple_and_unadorned.transparent_crystal": "通透水晶",
   "item.simple_and_unadorned.transparent_crystal_powder": "通透水晶粉末",
+  "item.simple_and_unadorned.transparent_crystal_block_item": "通透水晶块",
 
   "item.simple_and_unadorned.dipolar_tube": "双极试管",
   "item.simple_and_unadorned.dipolar_tube_potion.effect.empty": "双极试管",
@@ -72,6 +74,11 @@
   "effect.simple_and_unadorned.entanglement":"缠绕",
   "effect.simple_and_unadorned.acid_erosion":"酸蚀",
   "effect.simple_and_unadorned.invalid_armor":"战损",
+
+  "entity.simple_and_unadorned.mini_suspicious_creeper": "爬行者",
+  "entity.simple_and_unadorned.suspicious_creeper": "爬行者?",
+  "entity.simple_and_unadorned.suspicious_slime": "史莱姆？",
+  "entity.simple_and_unadorned.suspicious_enderman": "末影人？",
 
   "polarity.swash": "虚张声势",
   "polarity.paste": "粘附",

@@ -1,6 +1,5 @@
 package com.AutomaticalEchoes.SimpleAndUnadorned.api.Function;
 
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 

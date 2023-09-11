@@ -1,5 +1,6 @@
 package com.AutomaticalEchoes.SimpleAndUnadorned.client.Renderer;
 
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.projectile.DipolarTubeProjectile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -14,7 +15,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import com.AutomaticalEchoes.SimpleAndUnadorned.common.projectile.DipolarTubeProjectile;
 
 @OnlyIn(Dist.CLIENT)
 public class DipolarTubeRender extends EntityRenderer<DipolarTubeProjectile> {

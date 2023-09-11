@@ -5,12 +5,9 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import org.apache.logging.log4j.util.TriConsumer;
 
-import javax.annotation.Nullable;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 public  class BaseDipolarTubeFunc implements DipolarTubeFunc {
     private BiConsumer<DipolarTubeProjectile,HitResult> HIT_FUNC = (dipolarTubeProjectile, hitResult) -> {

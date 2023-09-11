@@ -3,11 +3,8 @@ package com.AutomaticalEchoes.SimpleAndUnadorned.api.DipolarUtils;
 import com.AutomaticalEchoes.SimpleAndUnadorned.register.ItemsRegister;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.brewing.IBrewingRecipe;
-
-import java.util.List;
 
 public class DipolarBrewingRecipe implements IBrewingRecipe {
     @Override

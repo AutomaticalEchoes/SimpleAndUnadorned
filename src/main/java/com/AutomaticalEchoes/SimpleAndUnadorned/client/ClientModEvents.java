@@ -2,25 +2,21 @@ package com.AutomaticalEchoes.SimpleAndUnadorned.client;
 
 
 import com.AutomaticalEchoes.SimpleAndUnadorned.SimpleAndUnadorned;
-import com.AutomaticalEchoes.SimpleAndUnadorned.api.Utils;
-import com.AutomaticalEchoes.SimpleAndUnadorned.client.Renderer.DipolarTubeRender;
-import com.AutomaticalEchoes.SimpleAndUnadorned.client.Renderer.SuspiciousSlimeAcidityRender;
-import com.AutomaticalEchoes.SimpleAndUnadorned.register.*;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
+import com.AutomaticalEchoes.SimpleAndUnadorned.client.Renderer.*;
+import com.AutomaticalEchoes.SimpleAndUnadorned.client.model.ICreeperModel;
+import com.AutomaticalEchoes.SimpleAndUnadorned.client.model.SusSlimeModel;
+import com.AutomaticalEchoes.SimpleAndUnadorned.register.BlockRegister;
+import com.AutomaticalEchoes.SimpleAndUnadorned.register.EntityRegister;
+import com.AutomaticalEchoes.SimpleAndUnadorned.register.FluidRegister;
+import com.AutomaticalEchoes.SimpleAndUnadorned.register.ItemsRegister;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.model.ItemOverride;
-import net.minecraft.client.renderer.block.model.ItemOverrides;
+import net.minecraft.client.renderer.entity.ExperienceOrbRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -28,7 +24,6 @@ import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import org.jetbrains.annotations.Nullable;
 
 
 // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
@@ -51,10 +46,22 @@ public  class ClientModEvents {
     }
 
     @SubscribeEvent
+    public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(SusSlimeModel.LAYER_LOCATION_SLIME,SusSlimeModel::createInnerBodyLayer);
+        event.registerLayerDefinition(SusSlimeModel.LAYER_LOCATION_SLIME_OUTER,SusSlimeModel::createOuterBodyLayer);
+        event.registerLayerDefinition(ICreeperModel.LAYER_LOCATION, ICreeperModel::createBodyLayer);
+    }
+
+    @SubscribeEvent
     public static void RegisterRenders(EntityRenderersEvent.RegisterRenderers event){
         event.registerEntityRenderer(EntityRegister.ACIDITY.get(), SuspiciousSlimeAcidityRender::new);
         event.registerEntityRenderer(EntityRegister.SUSPICIOUS_THROWN_ENDERPEARL_PROJECTILE.get(), p_174010_ -> new ThrownItemRenderer<>(p_174010_, 1.0F, true));
         event.registerEntityRenderer(EntityRegister.DIPOLAR_TUBE_PROJECTILE.get(), p_174010_ -> new DipolarTubeRender(p_174010_, 1.0F, false) );
+        event.registerEntityRenderer(EntityRegister.SUSPICIOUS_CREEPER.get(), SuspiciousCreeperRender::new);
+        event.registerEntityRenderer(EntityRegister.SUSPICIOUS_SLIME.get(), SuspiciousSlimeRender::new);
+        event.registerEntityRenderer(EntityRegister.MINI_SUS_CREEPER.get(), MiniSusCreeperRender::new);
+        event.registerEntityRenderer(EntityRegister.SUSPICIOUS_ENDERMAN.get(), SuspiciousEndermanRender::new);
+        event.registerEntityRenderer(EntityRegister.I_EXPERIENCE_ORB.get(), ExperienceOrbRenderer::new);
     }
 
     @SubscribeEvent
