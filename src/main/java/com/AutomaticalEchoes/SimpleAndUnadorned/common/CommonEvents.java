@@ -1,9 +1,11 @@
 package com.AutomaticalEchoes.SimpleAndUnadorned.common;
 
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.event.ExpTransformerRegister;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SuspiciousSlime.SuspiciousSlime;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.event.SusSlimeSummonEvent;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.event.SusSlimeWantExpEvent;
 import com.AutomaticalEchoes.SimpleAndUnadorned.register.EntityRegister;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -18,9 +20,15 @@ public class CommonEvents {
         event.getLevel().addFreshEntity(suspiciousSlime);
 
     }
+
     @SubscribeEvent
     public static void SpawnExpOrbWentWanted(SusSlimeWantExpEvent event){
         event.getSusSlimeBase().spawnOre();
+    }
+
+    @SubscribeEvent
+    public static void RegisterExpTransformer(ExpTransformerRegister event){
+        event.register(Items.DIAMOND,16);
     }
 
 

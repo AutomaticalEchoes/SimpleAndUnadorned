@@ -1,6 +1,6 @@
 package com.AutomaticalEchoes.SimpleAndUnadorned.common.event;
 
-import com.AutomaticalEchoes.SimpleAndUnadorned.common.blockEntity.SusSlimeBase;
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.blockEntity.SusSlimeBase.SusSlimeBase;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SuspiciousSlime.SuspiciousSlime;
 import net.minecraftforge.eventbus.api.Event;
 

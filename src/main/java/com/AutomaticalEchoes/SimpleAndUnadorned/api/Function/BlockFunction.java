@@ -1,6 +1,6 @@
 package com.AutomaticalEchoes.SimpleAndUnadorned.api.Function;
 
-import com.AutomaticalEchoes.SimpleAndUnadorned.common.blockEntity.SusSlimeBase;
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.blockEntity.SusSlimeBase.SusSlimeBase;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SuspiciousSlime.SuspiciousSlime;
 import com.AutomaticalEchoes.SimpleAndUnadorned.register.BlockRegister;
 import net.minecraft.core.BlockPos;

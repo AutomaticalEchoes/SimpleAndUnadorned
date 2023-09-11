@@ -50,8 +50,8 @@ public class AcidityBall extends AbstractHurtingProjectile {
                 areaeffectcloud.setRadius(entity instanceof SuspiciousSlime suspiciousSlime? radius * suspiciousSlime.getSize() / 4 : radius);
                 areaeffectcloud.setDuration(duration);
                 areaeffectcloud.setRadiusPerTick((7.0F - areaeffectcloud.getRadius()) / (float)areaeffectcloud.getDuration());
-                areaeffectcloud.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,20,2));
-                areaeffectcloud.addEffect(new MobEffectInstance(EffectsRegister.ACID_EROSION.get(),20,64));
+                areaeffectcloud.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,60,2));
+                areaeffectcloud.addEffect(new MobEffectInstance(EffectsRegister.ACID_EROSION.get(),60,1));
                 areaeffectcloud.addEffect(new MobEffectInstance(EffectsRegister.INVALID_ARMOR.get(),60,1));
                 if (!list.isEmpty()) {
                     for(LivingEntity livingentity : list) {

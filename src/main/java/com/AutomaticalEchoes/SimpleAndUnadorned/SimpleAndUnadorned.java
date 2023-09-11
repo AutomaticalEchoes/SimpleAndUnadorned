@@ -1,6 +1,7 @@
 package com.AutomaticalEchoes.SimpleAndUnadorned;
 
 import com.AutomaticalEchoes.SimpleAndUnadorned.api.ICauldronInteraction;
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.blockEntity.SusSlimeBase.TransformMap;
 import com.AutomaticalEchoes.SimpleAndUnadorned.config.ModCommonConfig;
 import com.AutomaticalEchoes.SimpleAndUnadorned.register.*;
 import com.mojang.logging.LogUtils;
@@ -59,6 +60,7 @@ public class SimpleAndUnadorned
     public void onServerStarting(ServerStartingEvent event)
     {
         ICauldronInteraction.Init();
+        TransformMap.Init();
         // Do something when the server starts
     }
 

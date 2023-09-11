@@ -42,6 +42,7 @@ public class NonNewtonianFluidBlock extends HalfTransparentBlock implements Buck
     private Supplier<? extends Item> bucketPickupItem = ItemsRegister.SUSPICIOUS_WATER_BUCKET;
     private IFunction.QuadFunction<BlockState, BlockGetter, BlockPos, CollisionContext,Boolean> CustomCollisionShape = (state, blockGetter, pos, collisionContext) -> false;
     private BiFunction<BlockPos,BlockState,BlockEntity> blockEntity = (pos, state) -> null;
+    private IFunction.SixConsumer<BlockState, Level, BlockPos, Block, BlockPos, Boolean> neighborChanged = (state, level, pos, block, pos2, o) -> { };
     private BlockEntityTickerFunc ticker = (level, state, blockEntityType) -> null;
     private GameEventListenerFunc gameEventListener = (serverLevel, blockEntity) -> null;
     private IFunction.PentConsumer<BlockState , Level , BlockPos , BlockState , Boolean> onRemove = (state, level, pos, state2, aBoolean) -> {
@@ -76,6 +77,11 @@ public class NonNewtonianFluidBlock extends HalfTransparentBlock implements Buck
 
     public NonNewtonianFluidBlock BlockEntity(BiFunction<BlockPos,BlockState,BlockEntity>  blockEntity){
         this.blockEntity = blockEntity;
+        return this;
+    }
+
+    public NonNewtonianFluidBlock NeighborChanged(IFunction.SixConsumer<BlockState, Level, BlockPos, Block, BlockPos, Boolean> neighborChanged){
+        this.neighborChanged = neighborChanged;
         return this;
     }
 
@@ -187,6 +193,10 @@ public class NonNewtonianFluidBlock extends HalfTransparentBlock implements Buck
     @Override
     public <T extends BlockEntity> GameEventListener getListener(ServerLevel p_221121_, T p_221122_) {
         return gameEventListener.apply(p_221121_,p_221122_);
+    }
+    @Override
+    public void neighborChanged(BlockState p_55666_, Level p_55667_, BlockPos p_55668_, Block p_55669_, BlockPos p_55670_, boolean p_55671_) {
+        neighborChanged.apply(p_55666_,p_55667_,p_55668_,p_55669_,p_55670_,p_55671_);
     }
 
     public interface BlockEntityTickerFunc<T extends BlockEntity>{

@@ -1,6 +1,5 @@
-package com.AutomaticalEchoes.SimpleAndUnadorned.common.blockEntity;
+package com.AutomaticalEchoes.SimpleAndUnadorned.common.blockEntity.SusSlimeBase;
 
-import com.AutomaticalEchoes.SimpleAndUnadorned.api.Function.FluidFunction;
 import com.AutomaticalEchoes.SimpleAndUnadorned.api.IContainerHelper;
 import com.AutomaticalEchoes.SimpleAndUnadorned.api.IExperienceOrb;
 import com.AutomaticalEchoes.SimpleAndUnadorned.register.BlockRegister;
@@ -18,7 +17,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,7 +27,6 @@ import java.util.List;
 
 public class SusSlimeBase extends RandomizableContainerBlockEntity {
     private final int size = 16;
-    private static final HashMap<Item,Integer> TRANSFORM_MAP = new HashMap<>();
     private NonNullList<ItemStack> itemStacks = NonNullList.withSize(16, ItemStack.EMPTY);
     private int power = 0 ;
     private int translateTIck = 0;
@@ -79,7 +77,7 @@ public class SusSlimeBase extends RandomizableContainerBlockEntity {
     }
 
     public void powerGrow(Level level) {
-        if(this.isEmpty()) return;
+        if(this.isEmpty() || level.hasNeighborSignal(worldPosition)) return;
         if(translateTIck > 0){
             translateTIck-- ;
             return;
@@ -96,7 +94,7 @@ public class SusSlimeBase extends RandomizableContainerBlockEntity {
         if(itemStack.getItem() instanceof ArmorItem || itemStack.getItem() instanceof TieredItem){
             growLevel = itemStack.getMaxDamage() - itemStack.getDamageValue();
         }else {
-            growLevel = TRANSFORM_MAP.getOrDefault(itemStack.getItem(), 1);
+            growLevel = TransformMap.TRANSFORM_MAP.getOrDefault(itemStack.getItem(), 1);
         }
         this.power += growLevel;
         this.translateTIck = growLevel;
@@ -115,20 +113,6 @@ public class SusSlimeBase extends RandomizableContainerBlockEntity {
         }
     }
 
-    public static void serverTick(Level p_155145_, BlockPos p_155146_, BlockState p_155147_, SusSlimeBase p_155148_) {
-        p_155148_.powerGrow(p_155145_);
-    }
-
-    public static void onRemove(BlockState p_60515_, Level p_60516_, BlockPos p_60517_, BlockState p_60518_, boolean p_60519_) {
-        if (p_60515_.hasBlockEntity() && (!p_60515_.is(p_60518_.getBlock()) || !p_60518_.hasBlockEntity())) {
-            if(p_60516_.getBlockEntity(p_60517_) instanceof SusSlimeBase susSlimeBase){
-                susSlimeBase.dropContainer();
-                susSlimeBase.spawnOre();
-            }
-            p_60516_.removeBlockEntity(p_60517_);
-        }
-    }
-
     @Override
     public int getContainerSize() {
         return 16;
@@ -144,5 +128,24 @@ public class SusSlimeBase extends RandomizableContainerBlockEntity {
         }
         return flag;
     }
+
+    public static void serverTick(Level p_155145_, BlockPos p_155146_, BlockState p_155147_, SusSlimeBase p_155148_) {
+        p_155148_.powerGrow(p_155145_);
+    }
+
+    public static void onRemove(BlockState p_60515_, Level p_60516_, BlockPos p_60517_, BlockState p_60518_, boolean p_60519_) {
+        if (p_60515_.hasBlockEntity() && (!p_60515_.is(p_60518_.getBlock()) || !p_60518_.hasBlockEntity())) {
+            if(p_60516_.getBlockEntity(p_60517_) instanceof SusSlimeBase susSlimeBase){
+                susSlimeBase.dropContainer();
+                susSlimeBase.spawnOre();
+            }
+            p_60516_.removeBlockEntity(p_60517_);
+        }
+    }
+
+    public static void neighborChanged(BlockState p_55666_, Level p_55667_, BlockPos p_55668_, Block p_55669_, BlockPos p_55670_, boolean p_55671_){
+
+    }
+
 
 }

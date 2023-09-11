@@ -6,7 +6,7 @@ import com.AutomaticalEchoes.SimpleAndUnadorned.api.Function.FluidFunction;
 import com.AutomaticalEchoes.SimpleAndUnadorned.api.ICauldronInteraction;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.block.ILayeredCauldronBlock;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.block.NonNewtonianFluidBlock;
-import com.AutomaticalEchoes.SimpleAndUnadorned.common.blockEntity.SusSlimeBase;
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.blockEntity.SusSlimeBase.SusSlimeBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;

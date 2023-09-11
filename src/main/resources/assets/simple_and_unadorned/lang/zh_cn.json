@@ -15,7 +15,7 @@
   "item.simple_and_unadorned.sus_enderpearl_powder": "末影珍珠粉末",
   "item.simple_and_unadorned.transparent_crystal": "通透水晶",
   "item.simple_and_unadorned.transparent_crystal_powder": "通透水晶粉末",
-  "item.simple_and_unadorned.transparent_crystal_block_item": "通透水晶块",
+
 
   "item.simple_and_unadorned.dipolar_tube": "双极试管",
   "item.simple_and_unadorned.dipolar_tube_potion.effect.empty": "双极试管",
@@ -69,6 +69,8 @@
   "item.minecraft.potion.effect.sus_water": "粘滞原液",
   "item.minecraft.splash_potion.effect.sus_water": "喷溅型粘滞原液",
   "item.minecraft.lingering_potion.effect.sus_water": "滞留型粘滞原液",
+
+  "block.simple_and_unadorned.transparent_crystal_block": "通透水晶块",
 
   "effect.simple_and_unadorned.rage_target":"狂热标记",
   "effect.simple_and_unadorned.entanglement":"缠绕",

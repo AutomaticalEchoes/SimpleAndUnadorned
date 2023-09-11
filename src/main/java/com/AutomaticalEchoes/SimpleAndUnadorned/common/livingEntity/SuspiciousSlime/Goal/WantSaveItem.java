@@ -1,10 +1,8 @@
 package com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SuspiciousSlime.Goal;
 
-import com.AutomaticalEchoes.SimpleAndUnadorned.common.blockEntity.SusSlimeBase;
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.blockEntity.SusSlimeBase.SusSlimeBase;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SuspiciousSlime.SuspiciousSlime;
-import com.AutomaticalEchoes.SimpleAndUnadorned.register.BlockRegister;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.item.ItemStack;
 
 public class WantSaveItem extends ProjectGoal {

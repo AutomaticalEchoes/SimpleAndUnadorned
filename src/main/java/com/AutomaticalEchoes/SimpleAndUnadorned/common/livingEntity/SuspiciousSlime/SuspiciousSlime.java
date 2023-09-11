@@ -2,7 +2,7 @@ package com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SuspiciousS
 
 import com.AutomaticalEchoes.SimpleAndUnadorned.api.HasExperience;
 import com.AutomaticalEchoes.SimpleAndUnadorned.api.IExperienceOrb;
-import com.AutomaticalEchoes.SimpleAndUnadorned.common.blockEntity.SusSlimeBase;
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.blockEntity.SusSlimeBase.SusSlimeBase;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.event.SusSlimeWantExpEvent;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SuspiciousSlime.Goal.*;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.projectile.AcidityBall;
@@ -49,7 +49,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.Tags;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -64,7 +63,7 @@ public class SuspiciousSlime extends Mob implements Enemy, InventoryCarrier , Ha
     private static final EntityDataAccessor<Integer> EXP = SynchedEntityData.defineId(SuspiciousSlime.class, EntityDataSerializers.INT);
     private final int TRANSLATE_TICK = 20 * ModCommonConfig.SUSPICIOUS_SLIME_TRANSLATE_TICK.get();
     private final int COLLECT_TICK = 20 * ModCommonConfig.SUSPICIOUS_SLIME_WANT_COLLECT_TICK.get();
-    private final int ACIDITY_PREPARE_TICK = 20 * ModCommonConfig.SUSPICIOUS_SLIME_ACIDITY_AREA_EFFECT_DURATION_TIME .get() * 10;
+    private final int ACIDITY_PREPARE_TICK = 20 * ModCommonConfig.SUSPICIOUS_SLIME_ACIDITY_PREPARE.get() * 20;
     private @Nullable BlockPos base;
     private boolean wasOnGround;
     private SimpleContainer container = new SimpleContainer(4);
@@ -115,6 +114,7 @@ public class SuspiciousSlime extends Mob implements Enemy, InventoryCarrier , Ha
         p_33619_.putInt("size", this.getSize());
         p_33619_.putInt("power", this.getPower());
         p_33619_.putInt("exp",getExperience());
+        p_33619_.putInt("acidity",this.acidityPrepareTime);
         p_33619_.putBoolean("wasOnGround", this.wasOnGround);
         p_33619_.put("slimeContainer", this.container.createTag());
     }
@@ -124,6 +124,7 @@ public class SuspiciousSlime extends Mob implements Enemy, InventoryCarrier , Ha
         this.setSize(p_33607_.getInt("size"),true);
         this.setPower(p_33607_.getInt("power"));
         this.addExperience(p_33607_.getInt("exp"));
+        this.acidityPrepareTime = p_33607_.getInt("acidity");
         this.wasOnGround = p_33607_.getBoolean("wasOnGround");
         this.container.fromTag(p_33607_.getList("slimeContainer",10));
     }
@@ -283,7 +284,7 @@ public class SuspiciousSlime extends Mob implements Enemy, InventoryCarrier , Ha
     }
 
     public boolean isDealsDamage() {
-        return !this.isTiny() && this.isEffectiveAi();
+        return this.isEffectiveAi();
     }
 
     protected float getAttackDamage() {

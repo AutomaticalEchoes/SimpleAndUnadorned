@@ -17,7 +17,7 @@ public class RandomDirectionGoal extends Goal {
     }
 
     public boolean canUse() {
-        return this.slime.getTarget() == null && !this.slime.isHasProject() && (this.slime.isOnGround() || this.slime.isInWater() || this.slime.isInLava() || this.slime.hasEffect(MobEffects.LEVITATION)) && this.slime.getMoveControl() instanceof IMoveControl;
+        return !this.slime.isBrave() && this.slime.getTarget() == null && !this.slime.isHasProject() && (this.slime.isOnGround() || this.slime.isInWater() || this.slime.isInLava() || this.slime.hasEffect(MobEffects.LEVITATION)) && this.slime.getMoveControl() instanceof IMoveControl;
     }
 
     public void tick() {

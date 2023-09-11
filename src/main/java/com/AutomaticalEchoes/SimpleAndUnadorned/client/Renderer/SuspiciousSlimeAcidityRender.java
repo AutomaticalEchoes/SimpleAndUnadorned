@@ -18,7 +18,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class SuspiciousSlimeAcidityRender extends EntityRenderer<AcidityBall> {
-    private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation("textures/entity/enderdragon/dragon_fireball.png");
+    private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation("textures/item/slime_ball.png");
     private static final RenderType RENDER_TYPE = RenderType.entityCutoutNoCull(TEXTURE_LOCATION);
 
     public SuspiciousSlimeAcidityRender(EntityRendererProvider.Context p_174391_) {
