@@ -18,9 +18,13 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
 
 public class DipolarTube extends ArrowItem implements Vanishable {
+    public static final HashMap<Potion,ItemStack> ALL_POTION_TUBES = new HashMap<>();
     public DipolarTube(Properties p_41383_) {
         super(p_41383_);
     }
@@ -37,7 +41,11 @@ public class DipolarTube extends ArrowItem implements Vanishable {
         int f = Math.min(6,i);
         if(p_41413_ instanceof ServerLevel serverLevel){
             DipolarTubeProjectile dipolarTubeProjectile = DipolarUtils.makeProjectile(serverLevel,p_41412_,p_41414_);
-            if(i >= 2) dipolarTubeProjectile.setTurn(true);
+            if(i >= 2){
+                dipolarTubeProjectile.setTurn(true);
+            }else {
+                dipolarTubeProjectile.setVertical(false);
+            }
             dipolarTubeProjectile.shootFromRotation(p_41414_, p_41414_.getXRot(), p_41414_.getYRot(), -4.0F * (6 - f) - 2.0F, 0.5F * f, 1.0F);
             serverLevel.addFreshEntity(dipolarTubeProjectile);
         }
@@ -61,20 +69,15 @@ public class DipolarTube extends ArrowItem implements Vanishable {
 
     @Override
     public void fillItemCategory(CreativeModeTab p_41391_, NonNullList<ItemStack> p_41392_) {
-        for(Potion potion : Registry.POTION) {
-            if (potion.allowedInCreativeTab(this, p_41391_, this.allowedIn(p_41391_))) {
-                if (potion != Potions.EMPTY) {
-                    p_41392_.add(PotionUtils.setPotion(new ItemStack(this), potion));
-                }
-            }
-        }
+        ALL_POTION_TUBES.forEach((potion, itemStack) -> {
+            if (potion.allowedInCreativeTab(this, p_41391_, this.allowedIn(p_41391_)))
+                p_41392_.add(itemStack);
+        });
     }
 
     @Override
     public AbstractArrow createArrow(Level p_40513_, ItemStack p_40514_, LivingEntity p_40515_) {
-        DipolarTubeProjectile dipolarTubeProjectile = DipolarUtils.makeProjectile(p_40513_,p_40514_,p_40515_);
-        dipolarTubeProjectile.setTurn(true);
-        return dipolarTubeProjectile;
+        return DipolarUtils.makeProjectile(p_40513_,p_40514_,p_40515_);
     }
 
     public ItemStack getDefaultInstance() {

@@ -1,11 +1,19 @@
 package com.AutomaticalEchoes.SimpleAndUnadorned.common;
 
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.event.ExpTransformerRegister;
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.event.PillagerMagazineRegister;
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.item.DipolarTube;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SuspiciousSlime.SuspiciousSlime;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.event.SusSlimeSummonEvent;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.event.SusSlimeWantExpEvent;
 import com.AutomaticalEchoes.SimpleAndUnadorned.register.EntityRegister;
+import com.AutomaticalEchoes.SimpleAndUnadorned.register.ItemsRegister;
+import net.minecraft.core.Registry;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -31,5 +39,8 @@ public class CommonEvents {
         event.register(Items.DIAMOND,16);
     }
 
-
+    @SubscribeEvent
+    public static void RegisterPillagerMagazine(PillagerMagazineRegister event){
+        event.Register(DipolarTube.ALL_POTION_TUBES.get(Potions.LONG_POISON),true);
+    }
 }

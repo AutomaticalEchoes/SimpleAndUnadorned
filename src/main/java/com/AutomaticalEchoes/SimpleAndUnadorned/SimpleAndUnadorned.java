@@ -2,12 +2,18 @@ package com.AutomaticalEchoes.SimpleAndUnadorned;
 
 import com.AutomaticalEchoes.SimpleAndUnadorned.api.ICauldronInteraction;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.blockEntity.SusSlimeBase.TransformMap;
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.item.DipolarTube;
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SusPillager.Magazine;
 import com.AutomaticalEchoes.SimpleAndUnadorned.config.ModCommonConfig;
 import com.AutomaticalEchoes.SimpleAndUnadorned.register.*;
 import com.mojang.logging.LogUtils;
+import net.minecraft.core.Registry;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -57,11 +63,23 @@ public class SimpleAndUnadorned
     }
 
     @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event)
-    {
+    public void onServerStarting(ServerStartingEvent event){
+        InitTubePotionMap();
+        Magazine.Init();
         ICauldronInteraction.Init();
         TransformMap.Init();
         // Do something when the server starts
+    }
+
+    public void InitTubePotionMap(){
+        for(Potion potion : Registry.POTION) {
+            if (potion != Potions.EMPTY) {
+                ItemStack itemStack = new ItemStack(ItemsRegister.DIPOLAR_TUBE_POTION_ITEM.get());
+                PotionUtils.setPotion(itemStack,potion);
+                DipolarTube.ALL_POTION_TUBES.put(potion,itemStack);
+            }
+
+        }
     }
 
 }

@@ -43,9 +43,10 @@ public class DipolarTubeRender extends EntityRenderer<DipolarTubeProjectile> {
             p_116088_.pushPose();
             p_116088_.translate(0,0.25F,0);
             p_116088_.scale(this.scale, this.scale, this.scale);
-            float v = Mth.lerp(p_116087_, p_116085_.yRotO, p_116085_.getYRot()) ;
-            p_116088_.mulPose(Vector3f.ZP.rotationDegrees(p_116085_.turnAngle * 30F));
-            p_116088_.mulPose(Vector3f.YP.rotationDegrees(p_116085_.turnAngle > 0 ? v - 90.0F :  v));
+            float Rx = Mth.lerp(p_116086_, p_116085_.xRotO, p_116085_.getXRot());
+            float Ry = Mth.lerp(p_116087_, p_116085_.yRotO, p_116085_.getYRot()) ;
+            p_116088_.mulPose(Vector3f.YP.rotationDegrees(p_116085_.isVertical() ? Ry - 90.0F : Ry));
+            p_116088_.mulPose(Vector3f.ZP.rotationDegrees(p_116085_.isVertical() ? Rx + 90.0F : p_116085_.turnAngle * 30F));
             this.itemRenderer.renderStatic(p_116085_.getItem(), ItemTransforms.TransformType.GROUND, p_116090_, OverlayTexture.NO_OVERLAY, p_116088_, p_116089_, p_116085_.getId());
             p_116088_.popPose();
             super.render(p_116085_, p_116086_, p_116087_, p_116088_, p_116089_, p_116090_);

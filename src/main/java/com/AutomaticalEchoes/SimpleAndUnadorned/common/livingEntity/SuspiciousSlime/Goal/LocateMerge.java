@@ -3,7 +3,6 @@ package com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SuspiciousS
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SuspiciousSlime.SuspiciousSlime;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.phys.AABB;
 

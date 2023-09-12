@@ -30,8 +30,8 @@ public class Ride extends Joke<LivingEntity> {
 
     @Override
     public boolean canJoke() {
-        if(suspiciousEnderman.getFirstPassenger() instanceof LivingEntity catching){
-            return super.canJoke() && func.apply(this,catching,suspiciousEnderman.getJokingTarget());
+        if(suspiciousEnderman.getFirstPassenger() instanceof LivingEntity catching && catching.isAlive()){
+            return super.canJoke() && func.apply(this,catching,suspiciousEnderman.getJokingTarget()) && Rider !=null && Saddle != null ;
         }
         return false;
     }

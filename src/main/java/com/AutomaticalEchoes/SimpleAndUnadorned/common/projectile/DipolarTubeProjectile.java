@@ -37,8 +37,8 @@ import java.util.List;
 public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier {
     private static final EntityDataAccessor<ItemStack> DATA_ITEM_STACK = SynchedEntityData.defineId(DipolarTubeProjectile.class, EntityDataSerializers.ITEM_STACK);
     private static final EntityDataAccessor<Boolean> TURN = SynchedEntityData.defineId(DipolarTubeProjectile.class,EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> VERTICAL = SynchedEntityData.defineId(DipolarTubeProjectile.class,EntityDataSerializers.BOOLEAN);
     private final ArrayList<DipolarTubeFunc> dipolarTubeFuncArrayList = new ArrayList<>();
-    private boolean turn;
     public  int tickCount = 0;
     public int turnAngle = 0;
     public boolean hit = false;
@@ -74,7 +74,8 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.getEntityData().define(DATA_ITEM_STACK, ItemStack.EMPTY);
-        this.getEntityData().define(TURN,turn);
+        this.getEntityData().define(TURN,false);
+        this.getEntityData().define(VERTICAL,true);
     }
 
     public void addAdditionalSaveData(CompoundTag p_37449_) {
@@ -83,13 +84,16 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
         if (!itemstack.isEmpty()) {
             p_37449_.put("Item", itemstack.save(new CompoundTag()));
         }
-        p_37449_.putBoolean("Turn",turn);
+
+        p_37449_.putBoolean("turn",this.isTurn());
+        p_37449_.putBoolean("vertical",this.isVertical());
     }
 
     public void readAdditionalSaveData(CompoundTag p_37445_) {
         super.readAdditionalSaveData(p_37445_);
         ItemStack itemstack = ItemStack.of(p_37445_.getCompound("Item"));
-        this.turn = p_37445_.getBoolean("Turn");
+        this.setTurn(p_37445_.getBoolean("turn"));
+        this.setVertical(p_37445_.getBoolean("vertical"));
         this.setItem(itemstack);
     }
 
@@ -152,14 +156,9 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
     @Override
     public void tick() {
         super.tick();
-
-        if(this.level.isClientSide && Minecraft.getInstance().player.getId() == this.getOwner().getId()){
-            if(isTurn()){
-                this.turnAngle++;
-                this.level.addParticle(ParticleTypes.GLOW,this.getX(),this.getY() + 0.3 * random.nextInt(-1,1),this.getZ(),0,0,0);
-            }else if(tickCount % 5 == 0){
-                this.level.addParticle(ParticleTypes.GLOW,this.getX() + 0.1 * random.nextInt(-1,1),this.getY() ,this.getZ() + 0.1 * random.nextInt(-1,1),0,10,0);
-            }
+        if(isTurn()) this.turnAngle++;
+        if(this.level.isClientSide &&  tickCount % 5 == 0 && this.getOwner() instanceof Player player && player.getId() == Minecraft.getInstance().player.getId()){
+            this.level.addParticle(ParticleTypes.GLOW,this.getX() + 0.1 * random.nextInt(-1,1),this.getY() ,this.getZ() + 0.1 * random.nextInt(-1,1),0,10,0);
         }
 
         if(!this.isAlive()) return;
@@ -188,8 +187,15 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
         }
     }
 
+    public void setVertical(boolean isVertical){
+        this.entityData.set(VERTICAL ,isVertical);
+    }
+
+    public Boolean isVertical() {
+        return this.getEntityData().get(VERTICAL);
+    }
+
     public void setTurn(boolean turn) {
-        this.turn = turn;
         this.entityData.set(TURN,turn);
     }
 
@@ -247,5 +253,7 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
             }
         }
     }
+
+
 
 }

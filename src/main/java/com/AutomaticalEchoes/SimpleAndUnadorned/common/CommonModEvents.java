@@ -4,6 +4,8 @@ import com.AutomaticalEchoes.SimpleAndUnadorned.SimpleAndUnadorned;
 import com.AutomaticalEchoes.SimpleAndUnadorned.api.DipolarUtils.DipolarBrewingRecipe;
 import com.AutomaticalEchoes.SimpleAndUnadorned.api.PotionBrewingRecipe;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.MiniSusCreeper.MiniSusCreeper;
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SusPillager.Magazine;
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SusPillager.SusPillager;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SuspiciousCreeper.SuspiciousCreeper;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SuspiciousSlime.SuspiciousSlime;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SuspiciousEnderman.SuspiciousEnderman;
@@ -56,5 +58,6 @@ public class CommonModEvents {
         event.put(EntityRegister.SUSPICIOUS_SLIME.get(), SuspiciousSlime.createAttributes().build());
         event.put(EntityRegister.MINI_SUS_CREEPER.get(), MiniSusCreeper.createAttributes().build());
         event.put(EntityRegister.SUSPICIOUS_ENDERMAN.get(), SuspiciousEnderman.createAttributes().build());
+        event.put(EntityRegister.SUSPICIOUS_PILLAGER.get(), SusPillager.createAttributes().build());
     }
 }

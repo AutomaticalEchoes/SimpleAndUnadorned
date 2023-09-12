@@ -42,4 +42,6 @@ public class ItemsRegister {
             () -> new ForgeSpawnEggItem(EntityRegister.MINI_SUS_CREEPER,894737, 0,CreateProperties()));
     public static final RegistryObject<Item> SUSPICIOUS_ENDERMAN_EGG = REGISTRY.register("suspicious_enderman_spawn_egg",
             () ->new ForgeSpawnEggItem(EntityRegister.SUSPICIOUS_ENDERMAN,1447446, 0,CreateProperties()));
+    public static final RegistryObject<Item> SUSPICIOUS_PILLAGER_EGG = REGISTRY.register("suspicious_pillager_spawn_egg",
+            () ->new ForgeSpawnEggItem(EntityRegister.SUSPICIOUS_PILLAGER,5451574, 9804699,CreateProperties()));
 }

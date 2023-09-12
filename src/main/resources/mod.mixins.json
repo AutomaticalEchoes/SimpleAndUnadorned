@@ -6,9 +6,7 @@
   "refmap": "mod.refmap.json",
   "plugin": "com.AutomaticalEchoes.SimpleAndUnadorned.mixin.MixinPlugin",
   "mixins": [
-    "PotionUtilMixin",
-    "BowItemMixin",
-    "CrossBowItemMixin"
+    "PotionUtilMixin"
   ],
   "client": [
   ],

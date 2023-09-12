@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class DipolarUtils{
-    public static DipolarTubeProjectile makeProjectile(Level level, ItemStack itemStack, LivingEntity owner){
+    public static DipolarTubeProjectile makeProjectile(Level level, ItemStack itemStack,@Nullable LivingEntity owner){
         DipolarTubeProjectile dipolarTubeProjectile = new DipolarTubeProjectile(owner, level, itemStack);
         List<Polarity> polarity = getPolarity(itemStack);
         if(polarity.isEmpty()){

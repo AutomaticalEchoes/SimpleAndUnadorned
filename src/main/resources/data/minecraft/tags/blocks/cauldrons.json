@@ -1,9 +1,5 @@
 {
   "values": [
-    "minecraft:cauldron",
-    "minecraft:water_cauldron",
-    "minecraft:lava_cauldron",
-    "minecraft:powder_snow_cauldron",
     "simple_and_unadorned:acidity_cauldron_block",
     "simple_and_unadorned:mucus_cauldron_block",
     "simple_and_unadorned:sus_water_cauldron_block"

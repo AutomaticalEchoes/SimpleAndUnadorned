@@ -3,6 +3,7 @@ package com.AutomaticalEchoes.SimpleAndUnadorned.register;
 import com.AutomaticalEchoes.SimpleAndUnadorned.SimpleAndUnadorned;
 import com.AutomaticalEchoes.SimpleAndUnadorned.api.IExperienceOrb;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.MiniSusCreeper.MiniSusCreeper;
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SusPillager.SusPillager;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SuspiciousCreeper.SuspiciousCreeper;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SuspiciousSlime.SuspiciousSlime;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SuspiciousEnderman.SuspiciousEnderman;
@@ -46,6 +47,11 @@ public class EntityRegister {
             ()-> EntityType.Builder.of(SuspiciousEnderman::new, MobCategory.MONSTER).sized(1.0F,3.0F)
                     .clientTrackingRange(20)
                     .build("suspicious_endermann"));
+    public static final RegistryObject<EntityType<SusPillager>> SUSPICIOUS_PILLAGER = REGISTER.register("suspicious_pillager",
+            ()-> EntityType.Builder.of(SusPillager::new, MobCategory.MONSTER).sized(1.0F,2.0F)
+                    .clientTrackingRange(20)
+                    .build("suspicious_pillager"));
+
     public static final RegistryObject<EntityType<IExperienceOrb>> I_EXPERIENCE_ORB= REGISTER.register("i_experience_orb",
             ()-> EntityType.Builder.of(IExperienceOrb::Create, MobCategory.MISC).sized(1.0F,3.0F)
                     .clientTrackingRange(20)

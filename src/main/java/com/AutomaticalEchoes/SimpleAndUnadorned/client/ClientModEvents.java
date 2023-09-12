@@ -37,7 +37,7 @@ public  class ClientModEvents {
         ItemBlockRenderTypes.setRenderLayer(FluidRegister.ACIDITY_FLOW.get(), RenderType.translucent());
         event.enqueueWork(() -> {
             ItemProperties.register(ItemsRegister.DIPOLAR_TUBE_POTION_ITEM.get(), new ResourceLocation("power"),
-                    (ClampedItemPropertyFunction) (p_174564_, p_174565_, p_174566_, p_174567_) -> p_174566_ != null && p_174566_.getUseItem() == p_174564_ ? (float)(p_174564_.getUseDuration() - p_174566_.getUseItemRemainingTicks()) / 60.0F : 0);
+                    (ClampedItemPropertyFunction) (p_174564_, p_174565_, p_174566_, p_174567_) -> p_174566_ != null && p_174566_.getUseItem() == p_174564_ ? (float)(p_174566_.getTicksUsingItem()) / 60.0F : 0);
 
             ItemProperties.register(ItemsRegister.DIPOLAR_TUBE_POTION_ITEM.get(), new ResourceLocation("handing"),
                     (ClampedItemPropertyFunction) (p_174564_, p_174565_, p_174566_, p_174567_) -> p_174566_ != null && p_174566_.isUsingItem() && p_174566_.getUseItem() == p_174564_ ? 1.0F : 0);
@@ -62,6 +62,7 @@ public  class ClientModEvents {
         event.registerEntityRenderer(EntityRegister.MINI_SUS_CREEPER.get(), MiniSusCreeperRender::new);
         event.registerEntityRenderer(EntityRegister.SUSPICIOUS_ENDERMAN.get(), SuspiciousEndermanRender::new);
         event.registerEntityRenderer(EntityRegister.I_EXPERIENCE_ORB.get(), ExperienceOrbRenderer::new);
+        event.registerEntityRenderer(EntityRegister.SUSPICIOUS_PILLAGER.get(), SusPillagerRender::new);
     }
 
     @SubscribeEvent

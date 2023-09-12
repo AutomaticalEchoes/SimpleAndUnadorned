@@ -24,17 +24,14 @@ public class DipolarBrewingRecipe implements IBrewingRecipe {
         }
 
         Polarity polarity = Polarity.getPolarity(ingredient.getItem());
-
-        CompoundTag resultItemTag = input.getOrCreateTag().copy();
+        ItemStack resultItem = input.copy();
+        CompoundTag resultItemTag = resultItem.getOrCreateTag();
         if(!resultItemTag.contains("polarity")){
             resultItemTag.put("polarity",new ListTag());
         }else if(DipolarUtils.isConflict(DipolarUtils.getPolarity(input),polarity)) {
             return ItemStack.EMPTY;
         }
-
         resultItemTag.getList("polarity", 10).add(polarity.getTag());
-        ItemStack resultItem = ItemsRegister.DIPOLAR_TUBE_POTION_ITEM.get().getDefaultInstance();
-        resultItem.setTag(resultItemTag);
         return resultItem;
     }
 }
