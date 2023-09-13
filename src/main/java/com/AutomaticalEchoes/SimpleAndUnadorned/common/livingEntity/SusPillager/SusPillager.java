@@ -121,17 +121,17 @@ public class SusPillager extends AbstractIllager implements CrossbowAttackMob{
     }
 
 
-    public AbstractIllager.IllagerArmPose getArmPose() {
-        if (this.isChargingCrossbow()) {
-            return AbstractIllager.IllagerArmPose.CROSSBOW_CHARGE;
+    public IllagerArmPose getArmPose() {
+        if(!this.isAggressive()){
+            return IllagerArmPose.CROSSBOW_CHARGE;
+        }else if (this.isChargingCrossbow()) {
+            return IllagerArmPose.CROSSBOW_CHARGE;
         } else if (this.isHolding(is -> is.getItem() instanceof net.minecraft.world.item.CrossbowItem)) {
-            return AbstractIllager.IllagerArmPose.CROSSBOW_HOLD;
-        } else {
-            return this.isAggressive() ? AbstractIllager.IllagerArmPose.ATTACKING : AbstractIllager.IllagerArmPose.NEUTRAL;
+            return IllagerArmPose.CROSSBOW_HOLD;
         }
+        return IllagerArmPose.NEUTRAL;
+//     return this.isAggressive() ? AbstractIllager.IllagerArmPose.ATTACKING : AbstractIllager.IllagerArmPose.NEUTRAL;
     }
-
-
 
     public float getWalkTargetValue(BlockPos p_33288_, LevelReader p_33289_) {
         return 0.0F;
@@ -151,6 +151,14 @@ public class SusPillager extends AbstractIllager implements CrossbowAttackMob{
 
     protected void populateDefaultEquipmentSlots(RandomSource p_219059_, DifficultyInstance p_219060_) {
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.CROSSBOW));
+    }
+
+    @Override
+    protected void enchantSpawnedWeapon(RandomSource p_217049_, float p_217050_) {
+        if (!this.getMainHandItem().isEmpty()) {
+            EnchantmentHelper.setEnchantments(Map.of(Enchantments.PIERCING,p_217049_.nextInt(3) + 1),this.getMainHandItem());
+            this.setItemSlot(EquipmentSlot.MAINHAND, EnchantmentHelper.enchantItem(p_217049_, this.getMainHandItem(), (int)(5.0F + p_217050_ * (float)p_217049_.nextInt(18)), false));
+        }
     }
 
     public boolean isAlliedTo(Entity p_33314_) {
@@ -259,15 +267,20 @@ public class SusPillager extends AbstractIllager implements CrossbowAttackMob{
     @Override
     public void tick() {
         super.tick();
+        if(level.isClientSide) return;
         if(chargeCoolDown > 0) chargeCoolDown --;
-        if(this.getCrossbowState() == CrossbowState.UNCHARGED && getBullet() > 0) this.crossbowState = CrossbowState.CHARGED;
+        this.setAggressive(getTarget() != null);
+        if(this.getCrossbowState() == CrossbowState.UNCHARGED && getBullet() > 0) {
+            this.crossbowState = CrossbowState.CHARGED;
+        }
         ChargingBullet();
         ReadyToAttack();
     }
 
     public void StartChargeBullet(){
-//        if(this.crossbowState != CrossbowState.UNCHARGED) return;
         this.startUsingItem(ProjectileUtil.getWeaponHoldingHand(this, item -> item instanceof CrossbowItem));
+        ItemStack crossBow = this.getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, item -> item instanceof CrossbowItem));
+        CrossbowItem.setCharged(crossBow, false);
         this.crossbowState = CrossbowState.CHARGING;
         this.setChargingCrossbow(true);
     }
@@ -302,7 +315,7 @@ public class SusPillager extends AbstractIllager implements CrossbowAttackMob{
     public void Attack(LivingEntity livingEntity,boolean blitz){
         if(this.crossbowState != CrossbowState.CHARGED) return;
         ItemStack crossBow = this.getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, item -> item instanceof CrossbowItem));
-        this.shootCrossbowProjectile(livingEntity ,crossBow ,Magazine.RandomAttackTube(this.level,this) ,1.6F);
+        this.shootCrossbowProjectile(livingEntity ,crossBow ,Magazine.RandomTube(this.level,this,Magazine.HARMFUL) ,1.6F);
         CrossbowItem.setCharged(crossBow, false);
         this.bulletUsed(1);
 

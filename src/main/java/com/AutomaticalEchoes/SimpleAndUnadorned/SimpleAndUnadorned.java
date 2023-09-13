@@ -8,6 +8,7 @@ import com.AutomaticalEchoes.SimpleAndUnadorned.config.ModCommonConfig;
 import com.AutomaticalEchoes.SimpleAndUnadorned.register.*;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.Registry;
+import net.minecraft.world.entity.raid.Raid;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -55,6 +56,7 @@ public class SimpleAndUnadorned
         ItemsRegister.REGISTRY.register(modEventBus);
         PotionRegister.REGISTRY.register(modEventBus);
         RecipeRegister.REGISTER.register(modEventBus);
+        StructureModifierRegister.REGISTER.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -68,6 +70,7 @@ public class SimpleAndUnadorned
         Magazine.Init();
         ICauldronInteraction.Init();
         TransformMap.Init();
+        CreatRaider();
         // Do something when the server starts
     }
 
@@ -78,8 +81,11 @@ public class SimpleAndUnadorned
                 PotionUtils.setPotion(itemStack,potion);
                 DipolarTube.ALL_POTION_TUBES.put(potion,itemStack);
             }
-
         }
+    }
+
+    public void CreatRaider(){
+        Raid.RaiderType.create("sus_pillager",EntityRegister.SUSPICIOUS_PILLAGER.get(),new int[]{0,0,0,1,1,1,2,2});
     }
 
 }

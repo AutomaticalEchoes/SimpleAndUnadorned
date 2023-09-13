@@ -14,30 +14,67 @@ import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class Magazine {
-    protected static final LinkedHashSet<ItemStack> MAGAZINE_ATTACK = new LinkedHashSet<>();
-    protected static final LinkedHashSet<ItemStack> MAGAZINE_HELP = new LinkedHashSet<>();
-    private static final List<ItemStack> ATTACK = new ArrayList<>();
-    private static final List<ItemStack> HELP = new ArrayList<>();
+    protected static final Magazine HARMFUL = new Magazine();
+    protected static final Magazine BENEFICIAL = new Magazine();
+    private final ArrayList<Integer> weights = new ArrayList<>();
+    private final List<ItemStack> itemStacks = new ArrayList<>();
+    private Integer totalWeight = 0;
+
     public static void Init(){
-        MinecraftForge.EVENT_BUS.post(new PillagerMagazineRegister(MAGAZINE_ATTACK,MAGAZINE_HELP));
-        ATTACK.clear();
-        ATTACK.addAll(MAGAZINE_ATTACK);
-        HELP.clear();
-        HELP.addAll(MAGAZINE_HELP);
+        MinecraftForge.EVENT_BUS.post(new PillagerMagazineRegister.Harmful(HARMFUL));
+        MinecraftForge.EVENT_BUS.post(new PillagerMagazineRegister.Beneficial(BENEFICIAL));
     }
 
-    protected static DipolarTubeProjectile RandomAttackTube(Level level, @Nullable LivingEntity owner){
-        int random = Utils.RANDOM.nextInt(ATTACK.size());
-        DipolarTubeProjectile dipolarTubeProjectile = DipolarUtils.makeProjectile(level, ATTACK.get(random), owner);
-        dipolarTubeProjectile.setTurn(true);
-        return dipolarTubeProjectile;
+    public boolean register(ItemStack itemStack ,Integer weight){
+        if(itemStacks.contains(itemStack)) return false;
+        itemStacks.add(itemStack);
+        totalWeight += weight;
+        weights.add(totalWeight);
+        return true;
+    }
+
+    public ItemStack getItemStack(Integer i){
+        return itemStacks.get(i);
+    }
+
+    public Integer getTotalWeight() {
+        return totalWeight;
+    }
+
+    public Integer[] getWeights() {
+        return weights.toArray(new Integer[0]);
+    }
+
+    protected static DipolarTubeProjectile RandomTube(Level level, @Nullable LivingEntity owner ,Magazine magazine){
+        int random = Utils.RANDOM.nextInt(magazine.getTotalWeight());
+        int index = Math.abs(BinarySearch(magazine.getWeights(), random));
+        return DipolarUtils.makeProjectile(level, magazine.getItemStack(index), owner);
     }
 
     public static boolean ValidItemStack(ItemStack itemStack){
         return itemStack.getItem() instanceof DipolarTube && itemStack.getOrCreateTag().contains("Potion");
     }
+
+    static Integer BinarySearch(Integer[] weight , Integer randomValue){
+        int low = 0;
+        int high = weight.length;
+        while (low < high){
+            int mid = (low + high) >>> 1;
+            int i = randomValue.compareTo(weight[mid]);
+            switch (i){
+                case -1 -> high = mid;
+                case 1 -> low = mid;
+                default -> {
+                    return mid + 1;
+                }
+            }
+        }
+        return low;
+    }
+
 
 }

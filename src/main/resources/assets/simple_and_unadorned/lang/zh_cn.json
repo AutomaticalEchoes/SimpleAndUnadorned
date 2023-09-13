@@ -9,6 +9,7 @@
   "item.simple_and_unadorned.suspicious_enderman_spawn_egg": "可疑的末影人刷怪蛋",
   "item.simple_and_unadorned.suspicious_slime_spawn_egg": "可疑的史莱姆刷怪蛋",
   "item.simple_and_unadorned.mini_suspicious_creeper_spawn_egg": "迷你爬行者刷怪蛋",
+  "item.simple_and_unadorned.suspicious_pillager_spawn_egg": "可疑的掠夺者刷怪蛋",
   "item.simple_and_unadorned.suspicious_water_bucket": "粘滞水桶",
   "item.simple_and_unadorned.mucus_bucket": "史莱姆粘液桶",
   "item.simple_and_unadorned.acidity_bucket": "酸液桶",
@@ -79,8 +80,9 @@
 
   "entity.simple_and_unadorned.mini_suspicious_creeper": "爬行者",
   "entity.simple_and_unadorned.suspicious_creeper": "爬行者?",
-  "entity.simple_and_unadorned.suspicious_slime": "史莱姆？",
-  "entity.simple_and_unadorned.suspicious_enderman": "末影人？",
+  "entity.simple_and_unadorned.suspicious_slime": "史莱姆?",
+  "entity.simple_and_unadorned.suspicious_pillager": "掠夺者?",
+  "entity.simple_and_unadorned.suspicious_enderman": "末影人?",
 
   "polarity.swash": "虚张声势",
   "polarity.paste": "粘附",

@@ -8,6 +8,7 @@ import com.AutomaticalEchoes.SimpleAndUnadorned.common.event.SusSlimeSummonEvent
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.event.SusSlimeWantExpEvent;
 import com.AutomaticalEchoes.SimpleAndUnadorned.register.EntityRegister;
 import com.AutomaticalEchoes.SimpleAndUnadorned.register.ItemsRegister;
+import com.AutomaticalEchoes.SimpleAndUnadorned.register.PotionRegister;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -40,7 +41,9 @@ public class CommonEvents {
     }
 
     @SubscribeEvent
-    public static void RegisterPillagerMagazine(PillagerMagazineRegister event){
-        event.Register(DipolarTube.ALL_POTION_TUBES.get(Potions.LONG_POISON),true);
+    public static void RegisterPillagerMagazine(PillagerMagazineRegister.Harmful event){
+        event.Register(DipolarTube.ALL_POTION_TUBES.get(Potions.LONG_POISON),6);
+        event.Register(DipolarTube.ALL_POTION_TUBES.get(Potions.SLOWNESS),3);
+        event.Register(DipolarTube.ALL_POTION_TUBES.get(PotionRegister.ACID_EROSION.get()),1);
     }
 }
