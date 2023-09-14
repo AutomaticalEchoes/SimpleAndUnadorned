@@ -58,6 +58,8 @@ public class SuspiciousEnderman extends Monster {
     private static final EntityDataAccessor<Boolean> DATA_SCARE = SynchedEntityData.defineId(SuspiciousEnderman.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> JOKING_TARGET_ID = SynchedEntityData.defineId(SuspiciousEnderman.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<ItemStack> CARRIED_ITEM = SynchedEntityData.defineId(SuspiciousEnderman.class ,EntityDataSerializers.ITEM_STACK);
+    private static final EntityDataAccessor<Boolean> SUS_BREAK = SynchedEntityData.defineId(SuspiciousEnderman.class,EntityDataSerializers.BOOLEAN);
+
 //    private static Integer PERSISTENT_SCARE_TIME = 20 * ModCommonConfig.ENDER_SCARE.get();
     private @Nullable LivingEntity JokingTarget;
     private int lastTeleportTime = 0;
@@ -88,6 +90,7 @@ public class SuspiciousEnderman extends Monster {
     @Override
     public void addAdditionalSaveData(CompoundTag p_21484_) {
         super.addAdditionalSaveData(p_21484_);
+        p_21484_.putBoolean("sus_break",isSusBreak());
         p_21484_.put("carried_item",this.entityData.get(CARRIED_ITEM).save(new CompoundTag()));
     }
 
@@ -95,6 +98,7 @@ public class SuspiciousEnderman extends Monster {
     public void readAdditionalSaveData(CompoundTag p_21450_) {
         super.readAdditionalSaveData(p_21450_);
         this.setCarriedItem(ItemStack.of(p_21450_.getCompound("carried_item")));
+        this.susBreak(p_21450_.getBoolean("sus_break"));
     }
 
     protected void defineSynchedData() {
@@ -103,6 +107,7 @@ public class SuspiciousEnderman extends Monster {
         this.entityData.define(DATA_SCARE,false);
         this.entityData.define(CARRIED_ITEM,ItemStack.EMPTY);
         this.entityData.define(JOKING_TARGET_ID,0);
+        this.entityData.define(SUS_BREAK,false);
     }
 
     @Override
@@ -438,6 +443,14 @@ public class SuspiciousEnderman extends Monster {
 
     public boolean isJoking(){
         return this.getEntityData().get(DATA_JOKING);
+    }
+
+    public boolean isSusBreak(){
+        return this.getEntityData().get(SUS_BREAK);
+    }
+
+    public void susBreak(boolean b){
+        this.entityData.set(SUS_BREAK,b);
     }
 
     public boolean CarryNothing(){

@@ -2,11 +2,9 @@ package com.AutomaticalEchoes.SimpleAndUnadorned.register;
 
 import com.AutomaticalEchoes.SimpleAndUnadorned.SimpleAndUnadorned;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.item.DipolarTube;
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.item.FunctionWeapon;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.item.SuspiciousEnderPearlItem;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.BucketItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -22,6 +20,7 @@ public class ItemsRegister {
     public static final RegistryObject<Item> SUS_ENDERPEARL_POWDER = REGISTRY.register("sus_enderpearl_powder",() -> new Item(CreateProperties()));
 
     public static final RegistryObject<Item> SUSPICIOUS_CREEPER_SAC =REGISTRY.register("suspicious_creeper_sac",() -> new Item(CreateProperties()));
+    public static final RegistryObject<Item> SOUL_CUTER = REGISTRY.register("soul_cuter",() -> new FunctionWeapon(CreateProperties().durability(8)).Function(FunctionWeapon::HalfLive));
 
     public static final RegistryObject<Item> SUSPICIOUS_SLIME_BALL = REGISTRY.register("suspicious_slime_ball",() -> new Item(CreateProperties()));
     public static final RegistryObject<Item> MUCUS_BUCKET = REGISTRY.register("mucus_bucket",() -> new BucketItem(FluidRegister.MUCUS, (new Item.Properties()).craftRemainder(Items.BUCKET).stacksTo(1).tab(SimpleAndUnadorned.SIMPLE_AND_UNADORNED_TAB)));

@@ -9,6 +9,7 @@ import com.mojang.math.Matrix4f;
 import net.minecraft.client.model.EndermanModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -22,6 +23,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.Nullable;
 
 @OnlyIn(Dist.CLIENT)
 public class SuspiciousEndermanRender extends MobRenderer<SuspiciousEnderman, EndermanModel<SuspiciousEnderman>> {
@@ -33,6 +35,11 @@ public class SuspiciousEndermanRender extends MobRenderer<SuspiciousEnderman, En
         this.addLayer(new ItemLayer<>(this, p_173992_.getItemInHandRenderer()));
     }
 
+    @Nullable
+    @Override
+    protected RenderType getRenderType(SuspiciousEnderman p_115322_, boolean p_115323_, boolean p_115324_, boolean p_115325_) {
+        return p_115322_.isSusBreak()? RenderType.endGateway() :  super.getRenderType(p_115322_, p_115323_, p_115324_, p_115325_);
+    }
 
     @Override
     public boolean shouldRender(SuspiciousEnderman p_115468_, Frustum p_115469_, double p_115470_, double p_115471_, double p_115472_) {

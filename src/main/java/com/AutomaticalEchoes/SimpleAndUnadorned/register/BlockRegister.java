@@ -22,7 +22,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class BlockRegister {
     public static final DeferredRegister<Block> DEFERRED_REGISTER =DeferredRegister.create(ForgeRegistries.BLOCKS , SimpleAndUnadorned.MODID);
 
-    public static final RegistryObject<Block> TRANSPARENT_CRYSTAL_BLOCK = DEFERRED_REGISTER.register("transparent_crystal_block",() ->new HalfTransparentBlock(BlockBehaviour.Properties.copy(Blocks.DIAMOND_BLOCK).noOcclusion().lightLevel(value -> 7)));
+    public static final RegistryObject<Block> TRANSPARENT_CRYSTAL_BLOCK = DEFERRED_REGISTER.register("transparent_crystal_block",() -> new HalfTransparentBlock(BlockBehaviour.Properties.copy(Blocks.DIAMOND_BLOCK).noOcclusion().lightLevel(value -> 7)));
     public static final RegistryObject<LiquidBlock> ACIDITY = DEFERRED_REGISTER.register("acidity",() -> new LiquidBlock(FluidRegister.ACIDITY, BlockBehaviour.Properties.of(Material.WATER).lightLevel(value -> 4).noCollission().strength(100.0F).noLootTable()));
     public static final RegistryObject<NonNewtonianFluidBlock> SUSPICIOUS_WATER = DEFERRED_REGISTER.register("suspicious_water",() -> new NonNewtonianFluidBlock(BlockBehaviour.Properties.of(Material.WATER).lightLevel(value -> 9).noCollission().strength(100.0F).noLootTable()));
     public static final RegistryObject<NonNewtonianFluidBlock> SUSPICIOUS_SLIME_BLOCK = DEFERRED_REGISTER.register("suspicious_slime_block",

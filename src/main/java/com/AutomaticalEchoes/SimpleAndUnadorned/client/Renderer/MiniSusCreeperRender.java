@@ -19,7 +19,6 @@ import org.jetbrains.annotations.NotNull;
 public class MiniSusCreeperRender extends MobRenderer<MiniSusCreeper, ICreeperModel<MiniSusCreeper>> {
     private static final ResourceLocation BOOMER_LOCATION = new ResourceLocation(SimpleAndUnadorned.MODID,"textures/model/entity/mini_sus_creeper/creeper.png");
 
-
     public MiniSusCreeperRender(EntityRendererProvider.Context p_173958_) {
         super(p_173958_, new ICreeperModel<>(p_173958_.bakeLayer(ICreeperModel.LAYER_LOCATION)), 0.5F);
         this.addLayer(new MiniCreeperEyes(this));

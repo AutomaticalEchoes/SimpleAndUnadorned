@@ -71,6 +71,8 @@
   "item.minecraft.splash_potion.effect.sus_water": "喷溅型粘滞原液",
   "item.minecraft.lingering_potion.effect.sus_water": "滞留型粘滞原液",
 
+  "item.simple_and_unadorned.soul_cuter": "灵魂裁切",
+
   "block.simple_and_unadorned.transparent_crystal_block": "通透水晶块",
 
   "effect.simple_and_unadorned.rage_target":"狂热标记",
@@ -83,6 +85,8 @@
   "entity.simple_and_unadorned.suspicious_slime": "史莱姆?",
   "entity.simple_and_unadorned.suspicious_pillager": "掠夺者?",
   "entity.simple_and_unadorned.suspicious_enderman": "末影人?",
+
+  "description.item.simple_and_unadorned.soul_cuter": "目标损失的生命值越多,造成的伤害越高",
 
   "polarity.swash": "虚张声势",
   "polarity.paste": "粘附",

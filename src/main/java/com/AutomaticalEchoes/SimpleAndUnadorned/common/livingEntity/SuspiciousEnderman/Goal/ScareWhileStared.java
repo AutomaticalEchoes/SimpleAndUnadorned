@@ -24,6 +24,11 @@ public class ScareWhileStared extends Goal {
         return this.pendingTarget != null;
     }
 
+    @Override
+    public void start() {
+        if(!this.enderman.isSusBreak())this.enderman.susBreak(true);
+        super.start();
+    }
 
     public void stop() {
         this.enderman.beingClown();

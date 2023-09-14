@@ -60,4 +60,5 @@ public class CommonModEvents {
         event.put(EntityRegister.SUSPICIOUS_ENDERMAN.get(), SuspiciousEnderman.createAttributes().build());
         event.put(EntityRegister.SUSPICIOUS_PILLAGER.get(), SusPillager.createAttributes().build());
     }
+
 }

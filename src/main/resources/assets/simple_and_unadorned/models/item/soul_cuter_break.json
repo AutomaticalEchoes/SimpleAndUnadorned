@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/handheld",
+	"textures":{
+		"layer0": "simple_and_unadorned:item/soul_cuter_break"
+	}
+}

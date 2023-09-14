@@ -67,7 +67,7 @@ public class Magazine {
             int i = randomValue.compareTo(weight[mid]);
             switch (i){
                 case -1 -> high = mid;
-                case 1 -> low = mid;
+                case 1 -> low = mid + 1;
                 default -> {
                     return mid + 1;
                 }

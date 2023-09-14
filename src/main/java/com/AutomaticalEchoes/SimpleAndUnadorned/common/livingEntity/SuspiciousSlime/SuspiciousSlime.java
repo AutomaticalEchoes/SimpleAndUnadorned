@@ -171,7 +171,7 @@ public class SuspiciousSlime extends Mob implements Enemy, InventoryCarrier , Ha
         if(this.level.isClientSide) return;
         translateTick();
         int rawBrightness = this.level.getRawBrightness(this.blockPosition(), 0);
-        this.setBrave(rawBrightness < 11 && rawBrightness > 7);
+        this.setBrave(rawBrightness > 11);
     }
 
     protected void decreaseSquish() {
