@@ -135,6 +135,7 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
 
     @Override
     protected void onHitEntity(EntityHitResult p_37259_) {
+        if(!(this.level instanceof ServerLevel serverLevel)) return;
         Entity entity = p_37259_.getEntity();
         if (entity.getType() == EntityType.ENDERMAN && !isOnGround()) {
             return;
@@ -149,6 +150,9 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
         preHitEntity(p_37259_);
         if (this.getPierceLevel() > 0) {
             this.setPierceLevel((byte) (this.getPierceLevel() - 1));
+        }else  {
+            serverLevel.sendParticles(ParticleTypes.INSTANT_EFFECT,entity.getX() ,entity.getY() + 1.5,entity.getZ(),20,0,1,0,0.05D);
+
         }
         setTurn(!isPassenger());
     }
@@ -167,16 +171,6 @@ public class DipolarTubeProjectile extends AbstractArrow implements ItemSupplier
             dipolarTubeFunc.tick(this, tickCount);
         }
         findHitEntityOnGround();
-    }
-
-    @Override
-    public void onRemovedFromWorld() {
-        if(this.level.isClientSide) {
-            for (int i = 0; i < 20; i++) {
-                this.level.addParticle(ParticleTypes.INSTANT_EFFECT,this.getX() + 0.5 * random.nextInt(-1,1),this.getY() + 0.5 * random.nextInt(-1,1),this.getZ() + 0.5 * random.nextInt(-1,1),0,0,0);
-            }
-        }
-        super.onRemovedFromWorld();
     }
 
     //_____________________________________________________________________________________________________________________________

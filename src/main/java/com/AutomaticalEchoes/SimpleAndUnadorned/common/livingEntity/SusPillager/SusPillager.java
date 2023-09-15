@@ -1,7 +1,9 @@
 package com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SusPillager;
 
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.item.DipolarTube;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SusPillager.Goal.SusPillagerChargeBullets;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SusPillager.Goal.SusPillagerCrossbowAttackGoal;
+import com.AutomaticalEchoes.SimpleAndUnadorned.common.projectile.DipolarTubeProjectile;
 import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -11,6 +13,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -26,6 +29,7 @@ import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.RangedCrossbowAttackGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestHealableRaiderTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.AbstractIllager;
@@ -67,6 +71,7 @@ public class SusPillager extends AbstractIllager implements CrossbowAttackMob{
     }
 
     protected void registerGoals() {
+        NearestHealableRaiderTargetGoal<Raider> raiderNearestHealableRaiderTargetGoal = new NearestHealableRaiderTargetGoal<>(this, Raider.class, true, (p_34159_) -> p_34159_ != null && this.hasActiveRaid() && p_34159_.getType() != EntityType.WITCH);
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(2, new Raider.HoldGroundAttackGoal(this, 10.0F));
@@ -79,6 +84,7 @@ public class SusPillager extends AbstractIllager implements CrossbowAttackMob{
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true,LivingEntity::attackable));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
+        this.targetSelector.addGoal(3, raiderNearestHealableRaiderTargetGoal);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -200,6 +206,7 @@ public class SusPillager extends AbstractIllager implements CrossbowAttackMob{
     }
 
     public void shootCrossbowProjectile(LivingEntity p_33275_, ItemStack p_33276_, Projectile p_33277_, float p_33278_) {
+        if(p_33277_ instanceof DipolarTubeProjectile dipolarTube) dipolarTube.setVertical(true);
         this.shootCrossbowProjectile(this, p_33275_, p_33277_, p_33278_, 1.6F);
         this.level.addFreshEntity(p_33277_);
     }
@@ -244,8 +251,6 @@ public class SusPillager extends AbstractIllager implements CrossbowAttackMob{
             } else if (p_33267_ > raid.getNumGroups(Difficulty.EASY)) {
                 map.put(Enchantments.QUICK_CHARGE, 1);
             }
-
-            map.put(Enchantments.MULTISHOT, 1);
             EnchantmentHelper.setEnchantments(map, itemstack);
             this.setItemSlot(EquipmentSlot.MAINHAND, itemstack);
         }
@@ -315,7 +320,8 @@ public class SusPillager extends AbstractIllager implements CrossbowAttackMob{
     public void Attack(LivingEntity livingEntity,boolean blitz){
         if(this.crossbowState != CrossbowState.CHARGED) return;
         ItemStack crossBow = this.getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, item -> item instanceof CrossbowItem));
-        this.shootCrossbowProjectile(livingEntity ,crossBow ,Magazine.RandomTube(this.level,this,Magazine.HARMFUL) ,1.6F);
+        Magazine magazine = this.getTarget() != null && this.getTarget().isAlive() && this.getTarget().getType().is(EntityTypeTags.RAIDERS) ? Magazine.BENEFICIAL : Magazine.HARMFUL;
+        this.shootCrossbowProjectile(livingEntity ,crossBow ,Magazine.RandomTube(this.level,this,magazine) ,1.6F);
         CrossbowItem.setCharged(crossBow, false);
         this.bulletUsed(1);
 

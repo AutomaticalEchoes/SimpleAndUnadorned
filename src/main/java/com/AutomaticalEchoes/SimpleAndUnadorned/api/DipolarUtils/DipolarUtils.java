@@ -29,7 +29,7 @@ import java.util.Optional;
 public class DipolarUtils{
     public static DipolarTubeProjectile makeProjectile(Level level, ItemStack itemStack,@Nullable LivingEntity owner){
         DipolarTubeProjectile dipolarTubeProjectile = new DipolarTubeProjectile(owner, level, itemStack);
-        List<Polarity> polarity = getPolarity(itemStack);
+        List<BrewablePolarity> polarity = getPolarity(itemStack);
         if(polarity.isEmpty()){
             dipolarTubeProjectile.AddFunc(new BaseDipolarTubeFunc().HitEntity(DipolarTubeFunc::Total));
         }else {
@@ -38,27 +38,27 @@ public class DipolarUtils{
         return dipolarTubeProjectile;
     }
 
-    public static List<Polarity> getPolarity(ItemStack itemStack){
-        ArrayList<Polarity> polarities = new ArrayList<>();
+    public static List<BrewablePolarity> getPolarity(ItemStack itemStack){
+        ArrayList<BrewablePolarity> polarities = new ArrayList<>();
         if(itemStack.getOrCreateTag().contains("polarity")){
             ListTag polarity = itemStack.getTag().getList("polarity", 10);
             polarity.forEach(tag -> {
-                Polarity fromName = Polarity.getFromName(((CompoundTag) tag).getString("name"));
+                BrewablePolarity fromName = BrewablePolarity.getFromName(((CompoundTag) tag).getString("name"));
                 if(fromName != null) polarities.add(fromName);
             });
         }
         return polarities;
     }
 
-    public static boolean isConflict(List<Polarity> polarities, Polarity polarity){
+    public static boolean isConflict(List<BrewablePolarity> polarities, BrewablePolarity polarity){
         if(polarities.isEmpty()) return false;
-        Optional<Polarity> first = polarities.stream().filter(insPolarity -> (polarity.getLogicalNum() & insPolarity.getLogicalNum()) != 0).findFirst();
+        Optional<BrewablePolarity> first = polarities.stream().filter(insPolarity -> (polarity.getLogicalNum() & insPolarity.getLogicalNum()) != 0).findFirst();
         return first.isPresent();
     }
 
 
     public static void addPolarityTooltip(ItemStack itemStack, List<Component> p_42990_){
-        List<Polarity> polarity = getPolarity(itemStack);
+        List<BrewablePolarity> polarity = getPolarity(itemStack);
         if(polarity.isEmpty()) return;
         p_42990_.add(Component.empty());
         polarity.forEach(polarity1 -> p_42990_.add(Component.translatable("polarity." + polarity1.getName()).withStyle(Style.EMPTY.withColor(polarity1.getColor()))));
@@ -66,7 +66,7 @@ public class DipolarUtils{
 
     public static boolean ValidItem(ItemStack itemStack){
         if(itemStack.getItem() != ItemsRegister.DIPOLAR_TUBE_POTION_ITEM.get()) return false;
-        List<Polarity> polarity = getPolarity(itemStack);
+        List<BrewablePolarity> polarity = getPolarity(itemStack);
         return polarity.size() < 2;
     }
 

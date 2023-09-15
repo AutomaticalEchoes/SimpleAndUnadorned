@@ -53,10 +53,17 @@ public class CommonEvents {
     }
 
     @SubscribeEvent
-    public static void RegisterPillagerMagazine(PillagerMagazineRegister.Harmful event){
+    public static void RegisterPillagerHarmfulMagazine(PillagerMagazineRegister.Harmful event){
         event.Register(DipolarTube.ALL_POTION_TUBES.get(Potions.LONG_POISON),6);
         event.Register(DipolarTube.ALL_POTION_TUBES.get(Potions.SLOWNESS),3);
         event.Register(DipolarTube.ALL_POTION_TUBES.get(PotionRegister.ACID_EROSION.get()),1);
+    }
+
+    @SubscribeEvent
+    public static void RegisterPillagerBeneficialMagazine(PillagerMagazineRegister.Beneficial event){
+        event.Register(DipolarTube.ALL_POTION_TUBES.get(Potions.REGENERATION),2);
+        event.Register(DipolarTube.ALL_POTION_TUBES.get(Potions.FIRE_RESISTANCE),2);
+        event.Register(DipolarTube.ALL_POTION_TUBES.get(Potions.HEALING),1);
     }
 
     @SubscribeEvent

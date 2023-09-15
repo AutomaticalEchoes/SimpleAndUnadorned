@@ -1,6 +1,7 @@
 package com.AutomaticalEchoes.SimpleAndUnadorned.common.livingEntity.SusPillager;
 
 import com.AutomaticalEchoes.SimpleAndUnadorned.api.DipolarUtils.DipolarUtils;
+import com.AutomaticalEchoes.SimpleAndUnadorned.api.DipolarUtils.Polarities;
 import com.AutomaticalEchoes.SimpleAndUnadorned.api.Utils;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.event.PillagerMagazineRegister;
 import com.AutomaticalEchoes.SimpleAndUnadorned.common.item.DipolarTube;
@@ -52,7 +53,7 @@ public class Magazine {
     protected static DipolarTubeProjectile RandomTube(Level level, @Nullable LivingEntity owner ,Magazine magazine){
         int random = Utils.RANDOM.nextInt(magazine.getTotalWeight());
         int index = Math.abs(BinarySearch(magazine.getWeights(), random));
-        return DipolarUtils.makeProjectile(level, magazine.getItemStack(index), owner);
+        return DipolarUtils.makeProjectile(level, magazine.getItemStack(index), owner).AddFunc(magazine != HARMFUL? Polarities.RAIDERS_ONLY : Polarities.RAIDERS_FRIENDLY);
     }
 
     public static boolean ValidItemStack(ItemStack itemStack){

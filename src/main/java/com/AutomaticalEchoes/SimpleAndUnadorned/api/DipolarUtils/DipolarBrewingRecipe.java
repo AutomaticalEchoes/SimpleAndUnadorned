@@ -1,6 +1,5 @@
 package com.AutomaticalEchoes.SimpleAndUnadorned.api.DipolarUtils;
 
-import com.AutomaticalEchoes.SimpleAndUnadorned.register.ItemsRegister;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.item.ItemStack;
@@ -14,7 +13,7 @@ public class DipolarBrewingRecipe implements IBrewingRecipe {
 
     @Override
     public boolean isIngredient(ItemStack ingredient) {
-        return Polarity.getPolarity(ingredient.getItem()) != null;
+        return BrewablePolarity.getPolarity(ingredient.getItem()) != null;
     }
 
     @Override
@@ -23,7 +22,7 @@ public class DipolarBrewingRecipe implements IBrewingRecipe {
             return ItemStack.EMPTY;
         }
 
-        Polarity polarity = Polarity.getPolarity(ingredient.getItem());
+        BrewablePolarity polarity = BrewablePolarity.getPolarity(ingredient.getItem());
         ItemStack resultItem = input.copy();
         CompoundTag resultItemTag = resultItem.getOrCreateTag();
         if(!resultItemTag.contains("polarity")){
